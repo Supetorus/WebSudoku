@@ -1,4 +1,4 @@
-class Board {
+export class Board {
     constructor() {
         this.size = 9;
         this.difficulty = 1;
@@ -21,7 +21,7 @@ class Board {
         }
         do {
             this.copyGrid(this.solved, this.unsolved);
-            removeNums();
+            this.removeNums();
         } while (!this.solveGrid() && !this.compareGrids(this.solved, this.current));
         this.copyGrid(this.unsolved, this.current);
     }
@@ -85,7 +85,7 @@ class Board {
         }
         return array;
     }
-    RemoveNums() {
+    removeNums() {
         this.indexes = this.shuffleArray(this.indexes);
         for (let i = 0; i < this.difficulty * 21; ++i) {
             this.unsolved[this.indexes[i] / 9][this.indexes[i] % 9] = 0;
@@ -137,8 +137,5 @@ class Board {
         }
         return true;
     }
-}
-function removeNums() {
-    throw new Error("Function not implemented.");
 }
 //# sourceMappingURL=board.js.map
