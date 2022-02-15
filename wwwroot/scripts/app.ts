@@ -1,6 +1,7 @@
 function TSButton() {
 	let name: string = "Fred";
 	document.getElementById("ts-example").innerHTML = greeter(user);
+	
 }
 
 class Student {

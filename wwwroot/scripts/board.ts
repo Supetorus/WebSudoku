@@ -1,4 +1,4 @@
-﻿class Board {
+export class Board {
 	size: number = 9;
 	difficulty: number = 1;
 
@@ -28,7 +28,7 @@
 
 		do {
 			this.copyGrid(this.solved, this.unsolved);
-			removeNums();
+			this.removeNums();
 		} while (!this.solveGrid() && !this.compareGrids(this.solved, this.current));
 
 		this.copyGrid(this.unsolved, this.current);
@@ -104,7 +104,7 @@
 		return array;
 	}
 
-	RemoveNums(): void {
+	removeNums(): void {
 		this.indexes = this.shuffleArray(this.indexes);
 
 		for (let i = 0; i < this.difficulty * 21; ++i) {
@@ -167,8 +167,4 @@
 
 		return true;
 	}
-}
-
-function removeNums() {
-    throw new Error("Function not implemented.");
 }
