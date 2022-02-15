@@ -6,10 +6,9 @@ let gameBoard: HTMLDivElement[][] = [];
 
 let gameTable: HTMLTableElement = document.createElement("table")
 
-//console.log(gameBoard.length);
+// Create the visual board elements.
 for (let x = 0; x < boardSize; x++) {
 	gameBoard.push([]);
-	//console.log(gameBoard.length);
 	let tr = document.createElement("tr");
 	for (let y = 0; y < boardSize; y++) {
 		let td = document.createElement('td');
@@ -21,5 +20,5 @@ for (let x = 0; x < boardSize; x++) {
 	}
 	gameTable.appendChild(tr);
 }
-
 sudokuBoard.appendChild(gameTable);
+

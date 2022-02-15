@@ -7,6 +7,10 @@ export class Game {
 	public totalHints: number = 3;
 	public time: number = 0;
 
+	public Game() {
+		this.board = new Board();
+	}
+
 	public incrememtMistakes(): void {
 		this.mistakes++;
 	}

@@ -2,10 +2,9 @@ let boardSize = 9;
 let sudokuBoard = document.getElementById("sudoku-board");
 let gameBoard = [];
 let gameTable = document.createElement("table");
-//console.log(gameBoard.length);
+// Create the visual board elements.
 for (let x = 0; x < boardSize; x++) {
     gameBoard.push([]);
-    //console.log(gameBoard.length);
     let tr = document.createElement("tr");
     for (let y = 0; y < boardSize; y++) {
         let td = document.createElement('td');

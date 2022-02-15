@@ -7,24 +7,38 @@ for details on configuring this project to bundle and minify static web assets. 
 
 .sudoku-box {
 	background-color: #5389c0;
-	margin-left: 3rem;
-	margin-right: 3rem;
+	margin-left: 2rem;
+	margin-right: 2rem;
 	padding: 1rem;
 }
 
-.number {
+.sudoku-box-column {
+	width: 6rem;
+	height: 40rem;
+	display: flex;
+	flex-direction: column;
+	align-content: center;
+	justify-content: space-evenly;
+	border-radius: 2rem;
+	width: fit-content;
+}
+
+.button {
 	display: inline-block;
 	display: flex;
 	align-content: center;
 	justify-content: center;
 	margin: auto;
 	padding: 0.4rem;
-	width: 4rem;
-	height: 4rem;
 	text-align: center;
 	background-color: #3b76b1;
 	border-radius: 1rem;
 	font-size: 2rem;
+}
+
+.number {
+	width: 4rem;
+	height: 4rem;
 }
 
 .sudoku-square {
@@ -42,13 +56,7 @@ for details on configuring this project to bundle and minify static web assets. 
 }
 
 #numbers {
-	width: 6rem;
-	height: 40rem;
-	display: flex;
-	flex-direction: column;
-	align-content: center;
-	justify-content: space-evenly;
-	border-radius: 2rem;
+
 }
 
 #sudoku-parent {
