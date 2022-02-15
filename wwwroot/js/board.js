@@ -3,7 +3,7 @@ export class Board {
         this.size = 9;
         this.difficulty = 1;
         this.nums = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-        this.indexes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+        this.indices = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
             10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
             20, 21, 22, 23, 24, 25, 26, 27, 28, 29,
             30, 31, 32, 33, 34, 35, 36, 37, 38, 39,
@@ -87,9 +87,9 @@ export class Board {
         return array;
     }
     removeNums() {
-        this.indexes = this.shuffleArray(this.indexes);
+        this.indices = this.shuffleArray(this.indices);
         for (let i = 0; i < this.difficulty * 21; ++i) {
-            this.unsolved[this.indexes[i] / 9][this.indexes[i] % 9] = 0;
+            this.unsolved[this.indices[i] / 9][this.indices[i] % 9] = 0;
         }
     }
     solveGrid() {
@@ -139,4 +139,4 @@ export class Board {
         return true;
     }
 }
-//# sourceMappingURL=Board.js.map
+//# sourceMappingURL=board.js.map

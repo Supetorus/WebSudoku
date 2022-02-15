@@ -16,4 +16,4 @@ export class Game {
         this.mistakes = 0;
     }
 }
-//# sourceMappingURL=Game.js.map
+//# sourceMappingURL=game.js.map
