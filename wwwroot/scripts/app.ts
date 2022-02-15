@@ -1,23 +1,25 @@
-function TSButton() {
-	let name: string = "Fred";
-	document.getElementById("ts-example").innerHTML = greeter(user);
-	
-}
+let boardSize = 9;
 
-class Student {
-	fullName: string;
-	constructor(public firstName: string, public middleInitial: string, public lastName: string) {
-		this.fullName = firstName + " " + middleInitial + " " + lastName;
+let sudokuBoard: HTMLDivElement = document.getElementById("sudoku-board") as HTMLDivElement;
+
+let gameBoard: HTMLDivElement[][] = [];
+
+let gameTable: HTMLTableElement = document.createElement("table")
+
+//console.log(gameBoard.length);
+for (let x = 0; x < boardSize; x++) {
+	gameBoard.push([]);
+	//console.log(gameBoard.length);
+	let tr = document.createElement("tr");
+	for (let y = 0; y < boardSize; y++) {
+		let td = document.createElement('td');
+		let div = document.createElement('div');
+		div.classList.add("sudoku-square");
+		td.appendChild(div);
+		tr.appendChild(td);
+		gameBoard[x].push(div);
 	}
+	gameTable.appendChild(tr);
 }
 
-interface Person {
-	firstName: string;
-	lastName: string;
-}
-
-function greeter(person: Person) {
-	return "Hello, " + person.firstName + " " + person.lastName;
-}
-
-let user = new Student("Fred", "M.", "Smith");
+sudokuBoard.appendChild(gameTable);

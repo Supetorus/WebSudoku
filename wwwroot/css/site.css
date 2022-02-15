@@ -27,6 +27,14 @@ for details on configuring this project to bundle and minify static web assets. 
 	font-size: 2rem;
 }
 
+.sudoku-square {
+	width: 3.22rem;
+	height: 3.22rem;
+	background-color: #acf3cd;
+	border-radius: 1rem;
+	margin: 0.5rem;
+}
+
 #sudoku-board {
 	width: 40rem;
 	height: 40rem;
@@ -50,8 +58,12 @@ for details on configuring this project to bundle and minify static web assets. 
 	width: 100%;
 }
 
-body{
+body {
 	font-size: 12px;
+}
+
+td {
+	padding: 0;
 }
 
 a.navbar-brand {
