@@ -12,4 +12,4 @@ export class Game {
         this.mistakes = 0;
     }
 }
-//# sourceMappingURL=game.js.map
+//# sourceMappingURL=Game.js.map

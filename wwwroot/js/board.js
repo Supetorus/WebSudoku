@@ -138,4 +138,4 @@ export class Board {
         return true;
     }
 }
-//# sourceMappingURL=board.js.map
+//# sourceMappingURL=Board.js.map
