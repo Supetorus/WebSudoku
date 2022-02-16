@@ -7,11 +7,11 @@ namespace WebSudoku.Data
 {
 	public class UserDAL : IDataAccessLayer<User>
 	{
-		public Context<User> db { get; set; }
+		public UserContext db { get; set; }
 
 		public void AddItem(User item)
 		{
-			if(db.Set.Find(item.ID) == null)
+			if(db.Users.Find(item.ID) == null)
 			{
 				db.Add(item);
 			}
@@ -24,20 +24,20 @@ namespace WebSudoku.Data
 
 		public IEnumerable<User> GetCollection()
 		{
-			return db.Set.ToList();
+			return db.Users.ToList();
 		}
 
 		public User GetItem(int id)
 		{
-			return db.Set.Find(id);
+			return db.Users.Find(id);
 		}
 
 		public void RemoveItem(int id)
 		{
-			var item = db.Set.Find(id);
+			var item = db.Users.Find(id);
 			if (item != null)
 			{
-				db.Set.Remove(item);
+				db.Users.Remove(item);
 				db.SaveChanges();
 			}
 		}
@@ -49,11 +49,35 @@ namespace WebSudoku.Data
 
 		public void UpdateItem(User item)
 		{
-			var result = db.Set.Find(item.ID);
+			var result = db.Users.Find(item.ID);
 			if (result != null)
 			{
 				db.Entry(result).CurrentValues.SetValues(item);
 				db.SaveChanges();
+			}
+		}
+
+		public Board LoadGame(int id)
+		{
+			Board board = db.Boards.Find(db.Users.Find(id));
+			board.Load();
+
+			return board;
+		}
+
+		public void SaveGame(Board board)
+		{
+			board.Save();
+
+			var result = db.Boards.Find(board.ID);
+			if (result != null)
+			{
+				db.Entry(result).CurrentValues.SetValues(board);
+				db.SaveChanges();
+			}
+			else
+			{
+				db.Add(board);
 			}
 		}
 	}

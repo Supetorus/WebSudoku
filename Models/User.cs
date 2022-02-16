@@ -7,7 +7,7 @@ namespace WebSudoku.Models
 	public class User
 	{
 		[Required]
-		public int ID { get; set; }
+		public int ID { get; private set; }
 		public float BestTimeEasy { get; set; }
 		public float AvgTimeEasy { get; set; }
 		public float BestTimeMedium { get; set; }

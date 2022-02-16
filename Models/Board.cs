@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text;
 
 namespace WebSudoku.Models
 {
@@ -7,15 +8,19 @@ namespace WebSudoku.Models
 	{
 		public static readonly int SIZE = 9;
 
+		public int ID { get; private set; }
 		public float Timer { get; private set; }
 		public int Mistakes { get; private set; }
 		public int Hints { get; private set; }
-
-		private int difficulty = 1;
+		public string UnsolvedData { get; private set; }
+		public string CurrentData { get; private set; }
+		public string NotesData { get; private set; }
+		public int Difficulty { get; private set; }
 
 		private int[,] solved = new int[SIZE, SIZE]; // Full board with all numbers
 		private int[,] unsolved = new int[SIZE, SIZE]; // The starting board with empty spaces
 		private int[,] current = new int[SIZE, SIZE]; // The starting board plus numbers user has entered
+		private int[,][,] notes = new int[3, 3][,];
 
 		private int[] nums = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
@@ -31,16 +36,71 @@ namespace WebSudoku.Models
 
 		private Random r = new Random();
 
-		public Board(int difficulty)
+		public Board()
 		{
-			this.difficulty = difficulty;
+			for (int i = 0; i < 3; ++i)
+			{
+				for (int j = 0; j < 3; ++j)
+				{
+					notes[i, j] = new int[SIZE, SIZE];
+				}
+			}
+		}
+
+		
+		public void Load()
+		{
+			for(int i = 0; i < SIZE; ++i)
+			{
+				for (int j = 0; j < SIZE; ++j)
+				{
+					unsolved[i, j] = UnsolvedData[i + j * SIZE];
+					current[i, j] = CurrentData[i + j * SIZE];
+
+					for (int k = 0; k < 3; ++k)
+					{
+						for (int l = 0; l < 3; ++l)
+						{
+							notes[i, j][k, l] = NotesData[i + j * SIZE + k * SIZE * SIZE + l * SIZE * SIZE * 3];
+						}
+					}
+				}
+			}
+		}
+
+		public void Save()
+		{
+			StringBuilder sb = new StringBuilder();
+
+			foreach(int i in unsolved) { sb.Append(i.ToString()); }
+
+			UnsolvedData = sb.ToString();
+			sb.Clear();
+
+			foreach (int i in current) { sb.Append(i.ToString()); }
+
+			CurrentData = sb.ToString();
+			sb.Clear();
+
+			foreach (int[,] i in notes)
+			{
+				foreach(int j in i)
+				{
+					sb.Append(j.ToString());
+				}
+			}
+
+			NotesData = sb.ToString();
 		}
 
 		/// <summary>
 		/// Generates a fresh board.
 		/// </summary>
-		public void Generate()
+		/// 
+		public void Generate(int difficulty)
 		{
+			Difficulty = difficulty;
+
 			while (!FillGrid())
 			{
 				ClearGrid(solved);
@@ -144,7 +204,7 @@ namespace WebSudoku.Models
 		{
 			indices = indices.OrderBy(x => r.Next()).ToArray();
 
-			for (int i = 0; i < difficulty * 21; ++i)
+			for (int i = 0; i < Difficulty * 21; ++i)
 			{
 				unsolved[indices[i] / 9, indices[i] % 9] = 0;
 			}

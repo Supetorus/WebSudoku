@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using WebSudoku.Models;
 
 namespace WebSudoku.Data
 {
-	public interface IDataAccessLayer<T> where T : class
+	public interface IDataAccessLayer<T>
 	{
-		Context<T> db { get; set; }
+		UserContext db { get; set; }
 
 		IEnumerable<T> GetCollection();
 		IEnumerable<T> SearchCollection(string query);
