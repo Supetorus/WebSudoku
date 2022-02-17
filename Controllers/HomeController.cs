@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+//using System.Web.Services;
 using System.Linq;
 using System.Threading.Tasks;
 using WebSudoku.Models;
@@ -20,6 +22,7 @@ namespace WebSudoku.Controllers
 			_logger = logger;
 		}
 
+		//Routing
 		public IActionResult Index()
 		{
 			return View();

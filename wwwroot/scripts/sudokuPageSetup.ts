@@ -7,10 +7,10 @@ let gameBoard: HTMLDivElement[][] = [];
 let gameTable: HTMLTableElement = document.createElement("table")
 
 // Create the visual board elements.
-for (let x = 0; x < boardSize; x++) {
+for (let x = 0; x < boardSize; ++x) {
 	gameBoard.push([]);
 	let tr = document.createElement("tr");
-	for (let y = 0; y < boardSize; y++) {
+	for (let y = 0; y < boardSize; ++y) {
 		let td = document.createElement('td');
 		let div = document.createElement('div');
 		div.classList.add("sudoku-square");

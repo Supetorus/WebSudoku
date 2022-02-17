@@ -115,6 +115,11 @@ namespace WebSudoku.Models
 			CopyGrid(unsolved, current);
 		}
 
+		public int[,] GetGrid()
+		{
+			return current;
+		}
+
 		/// <summary>
 		/// Returns the number in the current board in the given location.
 		/// </summary>
