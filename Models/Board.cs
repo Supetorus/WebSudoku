@@ -300,13 +300,16 @@ namespace WebSudoku.Models
 			return i == solved[x, y];
 		}
 
-		public void SetNum(int x, int y, int i)
+		public bool SetNum(int x, int y, int i)
 		{
 			current[x, y] = i;
 			if(i != solved[x, y])
 			{
 				++Mistakes;
+				return false;
 			}
+
+			return true;
 		}
 
 		public void ResetBoard()

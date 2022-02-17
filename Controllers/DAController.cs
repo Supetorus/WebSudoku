@@ -29,5 +29,12 @@ namespace WebSudoku.Controllers
 
 			return array;
 		}
+
+		[Route("SetNum/{x}/{y}/{value}")]
+		[HttpPost]
+		public bool SetBoardNum(int x, int y, int value)
+		{
+			return GameBoard.SetNum(x, y, value);
+		}
 	}
 }
