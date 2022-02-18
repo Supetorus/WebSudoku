@@ -20,10 +20,9 @@ function GetBoardGrid() {
 	return JSON.parse(xhttp.responseText);
 }
 
-//Does not work
 function SetNum(x: number, y: number, value: number) {
-	gameTable.rows[y].cells[x].textContent = value.toString();
-	xhttp.open("POST", 'WebSudoku/DAController/SetNum/${x}/${y}/${value}', false);
+	gameTable.rows[y].cells[x].children[0].textContent = value.toString();
+	xhttp.open("POST", 'WebSudoku/DAController/SetNum/' + x + '/' + y + '/' + value, false);
 	xhttp.send();
 	return JSON.parse(xhttp.responseText);
 }
