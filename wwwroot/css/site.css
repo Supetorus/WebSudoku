@@ -6,7 +6,7 @@ for details on configuring this project to bundle and minify static web assets. 
 }
 
 .sudoku-box {
-	background-color: #5389c0;
+	background-color: #477998;
 	margin-left: 2rem;
 	margin-right: 2rem;
 	padding: 1rem;
@@ -31,7 +31,7 @@ for details on configuring this project to bundle and minify static web assets. 
 	margin: auto;
 	padding: 0.4rem;
 	text-align: center;
-	background-color: #3b76b1;
+	background-color: #291F1E;
 	border-radius: 1rem;
 	font-size: 2rem;
 }
@@ -52,7 +52,7 @@ for details on configuring this project to bundle and minify static web assets. 
 .sudoku-square {
 	width: 3.22rem;
 	height: 3.22rem;
-	background-color: #acf3cd;
+	background-color: #291F1E;
 	border-radius: 1rem;
 	margin: 0.5rem;
 	padding: 0;
@@ -78,6 +78,8 @@ for details on configuring this project to bundle and minify static web assets. 
 
 body {
 	font-size: 12px;
+	color: #C4D6B0;
+	background-color: #B79492;
 }
 
 td {
