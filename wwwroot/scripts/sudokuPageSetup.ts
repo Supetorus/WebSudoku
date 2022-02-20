@@ -1,31 +1,26 @@
 ﻿let boardSize = 9;
-
-// sudokuBoard is the div element which contains the grid. Think of it as the background.
-let sudokuBoard: HTMLDivElement = document.getElementById("sudoku-board") as HTMLDivElement;
-
-// gameBoard is a 2D array of all the 'p' elements which compose the sudoku grid.
-let gameBoard: HTMLParagraphElement[][] = [];
-
 // All of the sudoku 'p' elements are contained in this html table.
-let gameTable: HTMLTableElement = document.createElement("table")
+let gameTable: HTMLTableElement = document.getElementById("gameTable") as HTMLTableElement;
 
-// Create the visual board elements.
-for (let x = 0; x < boardSize; ++x) {
-	gameBoard.push([]);
+// Sets up the gameTable and gameBoard to be boardSize.
+for (let i = 0; i < boardSize; i++) gameTable.appendChild(document.createElement('tr'));
+for (let row = 0; row < boardSize; row++) {
+	for (let col = 0; col < boardSize; col++) {
+		gameTable.rows[row].appendChild(document.createElement('td'));
+	}
+}
+
+// Create the visual board elements and store them in the gameTable.
+for (let col = 0; col < boardSize; ++col) {
 	let tr = document.createElement("tr");
-	for (let y = 0; y < boardSize; ++y) {
-		let td = document.createElement('td');
+	for (let row = 0; row < boardSize; ++row) {
 		let p = document.createElement('p');
 		p.classList.add("sudoku-square");
-		p.id = x.toString() + y.toString();
+		p.id = col.toString() + row.toString();
 		p.addEventListener('click', boardClicked);
-		td.appendChild(p);
-		tr.appendChild(td);
-		gameBoard[x].push(p);
+		gameTable.rows[row].cells[col].appendChild(p);
 	}
-	gameTable.appendChild(tr);
 }
-sudokuBoard.appendChild(gameTable);
 
 function boardClicked(e: MouseEvent) {
 	console.log(`Clicked ${(e.target as HTMLParagraphElement).id}`)

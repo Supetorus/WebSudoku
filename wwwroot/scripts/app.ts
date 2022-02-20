@@ -1,12 +1,10 @@
+
 document.getElementById("btn-new-game").addEventListener('click', e => {
 	let grid: number[] = GetBoardGrid();
-	for (let x = 0; x < boardSize; x++) {
-		for (let y = 0; y < boardSize; y++) {
-			let num = grid[x + y * boardSize];
-			let p = document.getElementById(x.toString() + y.toString());
-			p.textContent = num === 0 ? "" : num.toString();
-			p.id = x.toString() + y.toString();
-			//gameTable.rows[y].cells[x].children[0].appendChild(p);
+	for (let row = 0; row < boardSize; row++) {
+		for (let col = 0; col < boardSize; col++) {
+			let num = grid[row + col * boardSize];
+			gameTable.rows[row].cells[col].firstChild.textContent = num === 0 ? "" : num.toString();
 		}
 	}
 })
