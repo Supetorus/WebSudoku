@@ -17,17 +17,9 @@ namespace WebSudoku.Controllers
 
 		[Route("GetBoard")]
 		[HttpGet]
-		public int[] GetBoard()
+		public int[][] GetBoard()
 		{
-			int[] array = new int[Board.SIZE * Board.SIZE];
-			int[,] board = GameBoard.GetGrid();
-
-			for (int i = 0; i < array.Length; ++i)
-			{
-				array[i] = board[i / Board.SIZE, i % Board.SIZE];
-			}
-
-			return array;
+			return GameBoard.GetGrid();
 		}
 
 		[Route("SetNum/{x}/{y}/{value}")]
@@ -35,6 +27,14 @@ namespace WebSudoku.Controllers
 		public bool SetBoardNum(int x, int y, int value)
 		{
 			return GameBoard.SetNum(x, y, value);
+		}
+
+		[Route("Generate")]
+		[HttpPost]
+		public int[][] GenerateBoard()
+		{
+			GameBoard.Generate(1);
+			return GameBoard.GetGrid();
 		}
 	}
 }

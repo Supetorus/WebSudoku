@@ -7,7 +7,7 @@ xhttp.onload = function () {
             //console.log(xhttp.responseText);
         }
         else {
-            console.error("Failed to retrieve data from server, ${xhttp.responseText}");
+            console.error(`Failed to retrieve data from server, ${xhttp.responseText}`);
         }
     }
 };
@@ -18,8 +18,9 @@ function GetBoardGrid() {
     return JSON.parse(xhttp.responseText);
 }
 function SetNum(x, y, value) {
+    grid[x][y] = value;
     gameTable.rows[y].cells[x].children[0].textContent = value.toString();
-    xhttp.open("POST", 'WebSudoku/DAController/SetNum/' + x + '/' + y + '/' + value, false);
+    xhttp.open("POST", `WebSudoku/DAController/SetNum/${x}/${y}/${value}`, false);
     xhttp.send();
     return JSON.parse(xhttp.responseText);
 }

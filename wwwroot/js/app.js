@@ -1,14 +1,11 @@
+let grid;
 document.getElementById("btn-new-game").addEventListener('click', e => {
-    let grid = GetBoardGrid();
-    for (let row = 0; row < boardSize; row++) {
-        for (let col = 0; col < boardSize; col++) {
-            let num = grid[row + col * boardSize];
-            gameTable.rows[row].cells[col].firstChild.textContent = num === 0 ? "" : num.toString();
-        }
-    }
+    //Generate new Board
+    SetBoard();
 });
 document.getElementById("btn-reset").addEventListener('click', e => {
-    // Todo: Get the unsolved grid from the server and fill it in.
+    grid = GetBoardGrid();
+    SetBoard();
     console.log("Clicked Reset");
 });
 document.getElementById("btn-note").addEventListener('click', e => {
@@ -36,5 +33,13 @@ for (let i = 1; i <= boardSize; i++) {
         // number was entered where and find out whether it was correct or not.
         console.log(`Clicked ${num}`);
     });
+}
+function SetBoard() {
+    for (let row = 0; row < boardSize; row++) {
+        for (let col = 0; col < boardSize; col++) {
+            let num = grid[row][col];
+            gameTable.rows[row].cells[col].firstChild.textContent = num == 0 ? "" : num.toString();
+        }
+    }
 }
 //# sourceMappingURL=app.js.map
