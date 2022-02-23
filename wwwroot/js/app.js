@@ -4,7 +4,7 @@ document.getElementById("btn-new-game").addEventListener('click', e => {
     SetBoard();
 });
 document.getElementById("btn-reset").addEventListener('click', e => {
-    grid = GetBoardGrid();
+    grid = GetInitialGrid();
     SetBoard();
     console.log("Clicked Reset");
 });
@@ -13,6 +13,7 @@ document.getElementById("btn-note").addEventListener('click', e => {
     console.log("Clicked Note");
 });
 document.getElementById("btn-hint").addEventListener('click', e => {
+    //I think the best way to do this is to get a random unfilled position and ask the server for the correct number at that spot
     // Todo: Request a hint from the server and fill it in.
     console.log("Clicked Hint");
 });

@@ -9,11 +9,25 @@ namespace WebSudoku.Controllers
 	{
 		public static Board GameBoard { get; private set; } = new Board();
 
-		[Route("GetBoard")]
+		[Route("GetCurrentGrid")]
 		[HttpGet]
-		public int[][] GetBoard()
+		public int[][] GetCurrentBoard()
 		{
-			return GameBoard.GetGrid();
+			return GameBoard.GetCurrentGrid();
+		}
+
+		[Route("GetInitialGrid")]
+		[HttpGet]
+		public int[][] GetInitialBoard()
+		{
+			return GameBoard.GetInitialGrid();
+		}
+
+		[Route("GetCorrectNum/{x}/{y}")]
+		[HttpGet]
+		public int GetInitialBoard(int x, int y)
+		{
+			return GameBoard.GetCorrectNum(x, y);
 		}
 
 		[Route("SetNum/{x}/{y}/{value}")]
@@ -28,7 +42,7 @@ namespace WebSudoku.Controllers
 		public int[][] GenerateBoard()
 		{
 			GameBoard.Generate(1);
-			return GameBoard.GetGrid();
+			return GameBoard.GetInitialGrid();
 		}
 	}
 }
