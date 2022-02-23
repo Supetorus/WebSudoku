@@ -27,3 +27,9 @@ function SetNum(x: number, y: number, value: number) {
 	xhttp.send();
 	return JSON.parse(xhttp.responseText);
 }
+
+function GenerateBoard() {
+	xhttp.open("POST", "WebSudoku/DAController/Generate", false);
+	xhttp.send();
+	return JSON.parse(xhttp.responseText);
+}

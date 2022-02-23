@@ -1,7 +1,7 @@
 let grid: number[][];
 
 document.getElementById("btn-new-game").addEventListener('click', e => {
-	//Generate new Board
+	grid = GenerateBoard();
 	SetBoard();
 })
 

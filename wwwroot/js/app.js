@@ -1,6 +1,6 @@
 let grid;
 document.getElementById("btn-new-game").addEventListener('click', e => {
-    //Generate new Board
+    grid = GenerateBoard();
     SetBoard();
 });
 document.getElementById("btn-reset").addEventListener('click', e => {

@@ -7,13 +7,7 @@ namespace WebSudoku.Controllers
 	[Route("WebSudoku/DAController")]
 	public class DAController : ControllerBase
 	{
-		public Board GameBoard { get; private set; }
-
-		public DAController()
-		{
-			GameBoard = new Board();
-			GameBoard.Generate(1);
-		}
+		public static Board GameBoard { get; private set; } = new Board();
 
 		[Route("GetBoard")]
 		[HttpGet]

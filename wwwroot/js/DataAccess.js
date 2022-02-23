@@ -24,4 +24,9 @@ function SetNum(x, y, value) {
     xhttp.send();
     return JSON.parse(xhttp.responseText);
 }
+function GenerateBoard() {
+    xhttp.open("POST", "WebSudoku/DAController/Generate", false);
+    xhttp.send();
+    return JSON.parse(xhttp.responseText);
+}
 //# sourceMappingURL=DataAccess.js.map
