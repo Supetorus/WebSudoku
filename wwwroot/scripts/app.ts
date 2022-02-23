@@ -1,6 +1,8 @@
+let grid: number[][];
 
 document.getElementById("btn-new-game").addEventListener('click', e => {
 	let grid: number[] = GetBoardGrid();
+	SetBoard();
 	for (let row = 0; row < boardSize; row++) {
 		for (let col = 0; col < boardSize; col++) {
 			let num = grid[row + col * boardSize];
@@ -18,8 +20,9 @@ document.getElementById("btn-new-game").addEventListener('click', e => {
 })
 
 document.getElementById("btn-reset").addEventListener('click', e => {
-	// Todo: Get the unsolved grid from the server and fill it in.
-	console.log("Clicked Reset")
+	grid = GetInitialGrid();
+	SetBoard();
+	console.log("Clicked Reset");
 })
 
 document.getElementById("btn-note").addEventListener('click', e => {
@@ -28,6 +31,7 @@ document.getElementById("btn-note").addEventListener('click', e => {
 })
 
 document.getElementById("btn-hint").addEventListener('click', e => {
+	//I think the best way to do this is to get a random unfilled position and ask the server for the correct number at that spot
 	// Todo: Request a hint from the server and fill it in.
 	console.log("Clicked Hint")
 })
@@ -52,4 +56,13 @@ for (let i = 1; i <= boardSize; i++) {
 		// number was entered where and find out whether it was correct or not.
 		console.log(`Clicked ${num}`)
 	})
+}
+
+function SetBoard() {
+	for (let row = 0; row < boardSize; row++) {
+		for (let col = 0; col < boardSize; col++) {
+			let num = grid[row][col];
+			gameTable.rows[row].cells[col].firstChild.textContent = num == 0 ? "" : num.toString();
+		}
+	}
 }
