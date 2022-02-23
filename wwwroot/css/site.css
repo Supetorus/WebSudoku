@@ -1,26 +1,28 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
-.page-background {
+/*.page-background {
 	background-color: #b4b4b4;
-}
+}*/
 
 .sudoku-box {
 	background-color: #477998;
 	margin-left: 2rem;
 	margin-right: 2rem;
-	padding: 1rem;
+	padding: 0rem;
 }
 
 .sudoku-box-column {
-	width: 6rem;
+	width: fit-content;
+	min-width: fit-content;
 	height: 40rem;
+	min-height: 40rem;
 	display: flex;
 	flex-direction: column;
-	align-content: center;
-	justify-content: space-evenly;
+	align-items: center;
+	justify-content: space-between;
 	border-radius: 2rem;
-	width: fit-content;
+	padding: 1rem;
 }
 
 .button {
@@ -38,32 +40,67 @@ for details on configuring this project to bundle and minify static web assets. 
 
 .number {
 	width: 4rem;
+	min-width: 4rem;
 	height: 4rem;
+	min-height: 4rem;
 }
 
-/*p.number {
-	text-align: center;
-	padding: 0;
-	margin: 0;
-	font-size: 2rem;
-	width: fit-content;
-}*/
-
-.sudoku-square {
-	width: 3.22rem;
-	height: 3.22rem;
+td.sudoku-square {
 	background-color: #291F1E;
 	border-radius: 1rem;
-	margin: 0.5rem;
+	width: 3.442rem;
+	min-width: 3.442rem;
+	height: 3.442rem;
+	min-height: 3.442rem;
+	position: relative;
+}
+
+p.sudoku-square {
+	position: relative;
+	top: 1px;
+	width: 3.442rem;
+	min-width: 3.442rem;
+	height: 3.442rem;
+	min-height: 3.442rem;
+	margin: 0;
 	padding: 0;
 	text-align: center;
 	font-size: 2rem;
+}
+
+td.note-square {
+	width: 1.146rem;
+	min-width: 1.146rem;
+	height: 1.146rem;
+	min-height: 1.146rem;
+	/*background-color: #939393;*/
+}
+
+p.note-square {
+	position: relative;
+	top: -3px;
+	max-width: 1.146rem;
+	max-height: 1.146rem;
+	text-align: center;
+	font-size: 0.95rem;
+	margin: auto;
+	padding: 0;
+	/*font-weight: bold;*/
+}
+
+.note-table {
+/*	position: absolute;
+	z-index: 100;*/
+}
+
+.hidden {
+	display: none;
 }
 
 #sudoku-board {
 	width: 40rem;
 	height: 40rem;
-	border-radius: 3rem;
+	border-radius: 2rem;
 }
 
 #numbers {
@@ -74,6 +111,11 @@ for details on configuring this project to bundle and minify static web assets. 
 	top: 50%;
 	transform: translateY(-50%);
 	width: 100%;
+}
+
+#game-table {
+	border-collapse: separate;
+	border-spacing: 0.9rem;
 }
 
 body {

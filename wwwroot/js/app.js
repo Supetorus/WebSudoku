@@ -3,7 +3,15 @@ document.getElementById("btn-new-game").addEventListener('click', e => {
     for (let row = 0; row < boardSize; row++) {
         for (let col = 0; col < boardSize; col++) {
             let num = grid[row + col * boardSize];
-            gameTable.rows[row].cells[col].firstChild.textContent = num === 0 ? "" : num.toString();
+            let td = gameTable.rows[row].cells[col];
+            if (num === 0) {
+                td.childNodes[0].classList.add("hidden");
+                td.childNodes[1].classList.remove("hidden");
+            }
+            else {
+                td.childNodes[0].textContent = num === 0 ? "" : num.toString();
+                td.childNodes[1].classList.add("hidden");
+            }
         }
     }
 });
