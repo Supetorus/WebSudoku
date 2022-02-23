@@ -42,14 +42,6 @@ for (let row = 0; row < boardSize; row++) {
 	}
 }
 
-// Create the visual board elements and store them in the gameTable.
-for (let col = 0; col < boardSize; ++col) {
-	let tr = document.createElement("tr");
-	for (let row = 0; row < boardSize; ++row) {
-
-	}
-}
-
 function boardClicked(e: MouseEvent) {
-	console.log(`Clicked Cell ${(e.target as HTMLParagraphElement).id}`)
+	console.log(`Clicked Cell ${(e.target as HTMLElement).parentElement.closest("td").id}`)
 }

@@ -37,13 +37,7 @@ for (let row = 0; row < boardSize; row++) {
         gameTable.rows[row].cells[col].appendChild(noteTable);
     }
 }
-// Create the visual board elements and store them in the gameTable.
-for (let col = 0; col < boardSize; ++col) {
-    let tr = document.createElement("tr");
-    for (let row = 0; row < boardSize; ++row) {
-    }
-}
 function boardClicked(e) {
-    console.log(`Clicked Cell ${e.target.id}`);
+    console.log(`Clicked Cell ${e.target.parentElement.closest("td").id}`);
 }
 //# sourceMappingURL=sudokuPageSetup.js.map
