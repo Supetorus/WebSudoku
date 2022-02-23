@@ -7,27 +7,27 @@ namespace WebSudoku.Controllers
 	[Route("WebSudoku/DAController")]
 	public class DAController : ControllerBase
 	{
-		public Board GameBoard { get; private set; }
+		public static Board GameBoard { get; private set; } = new Board();
 
-		public DAController()
+		[Route("GetCurrentGrid")]
+		[HttpGet]
+		public int[][] GetCurrentBoard()
 		{
-			GameBoard = new Board();
-			GameBoard.Generate(1);
+			return GameBoard.GetCurrentGrid();
 		}
 
-		[Route("GetBoard")]
+		[Route("GetInitialGrid")]
 		[HttpGet]
-		public int[] GetBoard()
+		public int[][] GetInitialBoard()
 		{
-			int[] array = new int[Board.SIZE * Board.SIZE];
-			int[,] board = GameBoard.GetGrid();
+			return GameBoard.GetInitialGrid();
+		}
 
-			for (int i = 0; i < array.Length; ++i)
-			{
-				array[i] = board[i / Board.SIZE, i % Board.SIZE];
-			}
-
-			return array;
+		[Route("GetCorrectNum/{x}/{y}")]
+		[HttpGet]
+		public int GetInitialBoard(int x, int y)
+		{
+			return GameBoard.GetCorrectNum(x, y);
 		}
 
 		[Route("SetNum/{x}/{y}/{value}")]
@@ -35,6 +35,14 @@ namespace WebSudoku.Controllers
 		public bool SetBoardNum(int x, int y, int value)
 		{
 			return GameBoard.SetNum(x, y, value);
+		}
+
+		[Route("Generate")]
+		[HttpPost]
+		public int[][] GenerateBoard()
+		{
+			GameBoard.Generate(1);
+			return GameBoard.GetInitialGrid();
 		}
 	}
 }

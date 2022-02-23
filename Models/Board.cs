@@ -17,10 +17,10 @@ namespace WebSudoku.Models
 		public string NotesData { get; private set; }
 		public int Difficulty { get; private set; }
 
-		private int[,] solved = new int[SIZE, SIZE]; // Full board with all numbers
-		private int[,] unsolved = new int[SIZE, SIZE]; // The starting board with empty spaces
-		private int[,] current = new int[SIZE, SIZE]; // The starting board plus numbers user has entered
-		private int[,][,] notes = new int[3, 3][,];
+		private int[][] solved = new int[SIZE][]; // Full board with all numbers
+		private int[][] initial = new int[SIZE][]; // The starting board with empty spaces
+		private int[][] current = new int[SIZE][]; // The starting board plus numbers user has entered
+		private int[][][][] notes = new int[SIZE][][][];
 
 		private int[] nums = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
@@ -38,30 +38,38 @@ namespace WebSudoku.Models
 
 		public Board()
 		{
-			for (int i = 0; i < 3; ++i)
+			for (int i = 0; i < SIZE; ++i)
 			{
+				solved[i] = new int[SIZE];
+				initial[i] = new int[SIZE];
+				current[i] = new int[SIZE];
+				notes[i] = new int[SIZE][][];
+
 				for (int j = 0; j < 3; ++j)
 				{
-					notes[i, j] = new int[SIZE, SIZE];
+					notes[i][j] = new int[3][];
+					for(int k = 0; k < 3; ++k)
+					{
+						notes[i][j][k] = new int[3];
+					}
 				}
 			}
 		}
 
-		
 		public void Load()
 		{
 			for(int i = 0; i < SIZE; ++i)
 			{
 				for (int j = 0; j < SIZE; ++j)
 				{
-					unsolved[i, j] = UnsolvedData[i + j * SIZE];
-					current[i, j] = CurrentData[i + j * SIZE];
+					initial[i][j] = UnsolvedData[i + j * SIZE];
+					current[i][j] = CurrentData[i + j * SIZE];
 
 					for (int k = 0; k < 3; ++k)
 					{
 						for (int l = 0; l < 3; ++l)
 						{
-							notes[i, j][k, l] = NotesData[i + j * SIZE + k * SIZE * SIZE + l * SIZE * SIZE * 3];
+							notes[i][j][k][l] = NotesData[i + j * SIZE + k * SIZE * SIZE + l * SIZE * SIZE * 3];
 						}
 					}
 				}
@@ -70,33 +78,32 @@ namespace WebSudoku.Models
 
 		public void Save()
 		{
-			StringBuilder sb = new StringBuilder();
+			StringBuilder sbs = new StringBuilder();
+			StringBuilder sbu = new StringBuilder();
+			StringBuilder sbn = new StringBuilder();
 
-			foreach(int i in unsolved) { sb.Append(i.ToString()); }
-
-			UnsolvedData = sb.ToString();
-			sb.Clear();
-
-			foreach (int i in current) { sb.Append(i.ToString()); }
-
-			CurrentData = sb.ToString();
-			sb.Clear();
-
-			foreach (int[,] i in notes)
+			for(int i = 0; i < SIZE; ++i) 
 			{
-				foreach(int j in i)
+				for(int j = 0; j < SIZE; ++j)
 				{
-					sb.Append(j.ToString());
+					sbs.Append(solved[i][j].ToString());
+					sbu.Append(initial[i][j].ToString());
+
+					for (int k = 0; k < 3; ++k)
+					{
+						for (int l = 0; l < 3; ++l)
+						{
+							sbn.Append(initial[k][l].ToString());
+						}
+					}
 				}
 			}
 
-			NotesData = sb.ToString();
+			UnsolvedData = sbs.ToString();
+			CurrentData = sbu.ToString();
+			NotesData = sbn.ToString();
 		}
 
-		/// <summary>
-		/// Generates a fresh board.
-		/// </summary>
-		/// 
 		public void Generate(int difficulty)
 		{
 			Difficulty = difficulty;
@@ -108,79 +115,18 @@ namespace WebSudoku.Models
 
 			do
 			{
-				CopyGrid(solved, unsolved);
+				CopyGrid(solved, initial);
 				RemoveNums();
 			} while (!SolveGrid() && !CompareGrids(solved, current));
 
-			CopyGrid(unsolved, current);
-		}
-
-		public int[,] GetGrid()
-		{
-			return current;
-		}
-
-		/// <summary>
-		/// Returns the number in the current board in the given location.
-		/// </summary>
-		/// <param name="x">Column, 0 based</param>
-		/// <param name="y">Row, 0 based</param>
-		/// <returns></returns>
-		public int GetNum(int x, int y) { return current[x, y]; }
-		public int GetCorrectNum(int x, int y) { return solved[x, y]; }
-
-		/// <summary>
-		/// Returns the number in the given position of the initial, or unsolved board.
-		/// </summary>
-		/// <param name="x">Column, 0 based</param>
-		/// <param name="y">Row, 0 based</param>
-		/// <returns></returns>
-		public int GetUnsolvedNum(int x, int y) { return unsolved[x, y]; }
-
-		void ClearGrid(int[,] grid)
-		{
-			for (int x = 0; x < SIZE; ++x)
-			{
-				for (int y = 0; y < SIZE; ++y)
-				{
-					grid[x, y] = 0;
-				}
-			}
-		}
-
-		// Returns true if the given grids are identical.
-		bool CompareGrids(int[,] g1, int[,] g2)
-		{
-			for (int x = 0; x < SIZE; ++x)
-			{
-				for (int y = 0; y < SIZE; ++y)
-				{
-					if (g1[x, y] != g2[x, y])
-					{
-						return false;
-					}
-				}
-			}
-
-			return true;
-		}
-
-		void CopyGrid(int[,] g1, int[,] g2)
-		{
-			for (int x = 0; x < SIZE; ++x)
-			{
-				for (int y = 0; y < SIZE; ++y)
-				{
-					g2[x, y] = g1[x, y];
-				}
-			}
+			CopyGrid(initial, current);
 		}
 
 		bool FillGrid()
 		{
-			for (int x = 0; x < 9; ++x)
+			for (int x = 0; x < SIZE; ++x)
 			{
-				for (int y = 0; y < 9; ++y)
+				for (int y = 0; y < SIZE; ++y)
 				{
 					bool flag = false;
 					nums = nums.OrderBy(x => r.Next()).ToArray();
@@ -189,7 +135,7 @@ namespace WebSudoku.Models
 					{
 						if (CheckSafety(x, y, i, solved))
 						{
-							solved[x, y] = i;
+							solved[x][y] = i;
 							flag = true;
 							break;
 						}
@@ -205,25 +151,47 @@ namespace WebSudoku.Models
 			return true;
 		}
 
+		void ClearGrid(int[][] grid)
+		{
+			for (int x = 0; x < SIZE; ++x)
+			{
+				for (int y = 0; y < SIZE; ++y)
+				{
+					grid[x][y] = 0;
+				}
+			}
+		}
+
+		void CopyGrid(int[][] g1, int[][] g2)
+		{
+			for (int x = 0; x < SIZE; ++x)
+			{
+				for (int y = 0; y < SIZE; ++y)
+				{
+					g2[x][y] = g1[x][y];
+				}
+			}
+		}
+
 		void RemoveNums()
 		{
 			indices = indices.OrderBy(x => r.Next()).ToArray();
 
 			for (int i = 0; i < Difficulty * 21; ++i)
 			{
-				unsolved[indices[i] / 9, indices[i] % 9] = 0;
+				initial[indices[i] / 9][indices[i] % 9] = 0;
 			}
 		}
 
 		bool SolveGrid()
 		{
-			CopyGrid(unsolved, current);
+			CopyGrid(initial, current);
 
 			for (int x = 0; x < SIZE; ++x)
 			{
 				for (int y = 0; y < SIZE; ++y)
 				{
-					if (unsolved[x, y] == 0)
+					if (initial[x][y] == 0)
 					{
 						bool flag = false;
 
@@ -231,7 +199,7 @@ namespace WebSudoku.Models
 						{
 							if (CheckSafety(x, y, i, current))
 							{
-								current[x, y] = i;
+								current[x][y] = i;
 								flag = true;
 							}
 						}
@@ -247,6 +215,50 @@ namespace WebSudoku.Models
 			return true;
 		}
 
+		// Returns true if the given grids are identical.
+		bool CompareGrids(int[][] g1, int[][] g2)
+		{
+			for (int x = 0; x < SIZE; ++x)
+			{
+				for (int y = 0; y < SIZE; ++y)
+				{
+					if (g1[x][y] != g2[x][y])
+					{
+						return false;
+					}
+				}
+			}
+
+			return true;
+		}
+
+		public int[][] GetInitialGrid()
+		{
+			return initial;
+		}
+
+		public int[][] GetCurrentGrid()
+		{
+			return current;
+		}
+
+		/// <summary>
+		/// Returns the number in the current board in the given location.
+		/// </summary>
+		/// <param name="x">Column, 0 based</param>
+		/// <param name="y">Row, 0 based</param>
+		/// <returns></returns>
+		public int GetNum(int x, int y) { return current[x][y]; }
+		public int GetCorrectNum(int x, int y) { return solved[x][y]; }
+
+		/// <summary>
+		/// Returns the number in the given position of the initial, or unsolved board.
+		/// </summary>
+		/// <param name="x">Column, 0 based</param>
+		/// <param name="y">Row, 0 based</param>
+		/// <returns></returns>
+		public int GetUnsolvedNum(int x, int y) { return initial[x][y]; }
+
 		public bool CheckSafety(int x, int y, int i)
 		{
 			return CheckSafety(x, y, i, current);
@@ -260,12 +272,12 @@ namespace WebSudoku.Models
 		/// <param name="i">The number to be checked</param>
 		/// <param name="grid">The grid to check in</param>
 		/// <returns></returns>
-		private bool CheckSafety(int x, int y, int i, int[,] grid)
+		private bool CheckSafety(int x, int y, int i, int[][] grid)
 		{
 			//Check Row
 			for (int gx = 0; gx < SIZE; ++gx)
 			{
-				if (grid[gx, y] == i)
+				if (grid[gx][y] == i)
 				{
 					return false;
 				}
@@ -274,7 +286,7 @@ namespace WebSudoku.Models
 			//Check Column
 			for (int gy = 0; gy < SIZE; ++gy)
 			{
-				if (grid[x, gy] == i)
+				if (grid[x][gy] == i)
 				{
 					return false;
 				}
@@ -285,7 +297,7 @@ namespace WebSudoku.Models
 			{
 				for (int by = y - (y % 3); by < y - (y % 3) + 3; ++by)
 				{
-					if (grid[bx, by] == i)
+					if (grid[bx][by] == i)
 					{
 						return false;
 					}
@@ -297,13 +309,13 @@ namespace WebSudoku.Models
 
 		public bool CheckNum(int x, int y, int i)
 		{
-			return i == solved[x, y];
+			return i == solved[x][y];
 		}
 
 		public bool SetNum(int x, int y, int i)
 		{
-			current[x, y] = i;
-			if(i != solved[x, y])
+			current[x][y] = i;
+			if(i != solved[x][y])
 			{
 				++Mistakes;
 				return false;
@@ -314,11 +326,11 @@ namespace WebSudoku.Models
 
 		public void ResetBoard()
 		{
-			for (int i = 0; i < 9; i++)
+			for (int i = 0; i < SIZE; ++i)
 			{
-				for (int j = 0; j < 9; j++)
+				for (int j = 0; j < SIZE; ++j)
 				{
-					current[i, j] = unsolved[i, j];
+					current[i][j] = initial[i][j];
 				}
 			}
 		}
@@ -338,7 +350,7 @@ namespace WebSudoku.Models
 			{
 				for (int j = 0; j < 9; j++)
 				{
-					if (current[i, j] == n && CheckNum(i, j, n)) { count++; }
+					if (current[i][j] == n && CheckNum(i, j, n)) { count++; }
 				}
 			}
 
