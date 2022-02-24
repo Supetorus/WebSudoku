@@ -69,7 +69,7 @@ function SetBoard() {
 				(td.childNodes[1] as HTMLTableElement).classList.remove("hidden"); // shows the notes grid
 			}
 			else {
-				td.childNodes[0].textContent = cell.n === 0 ? "" : cell.n.toString();
+				td.childNodes[0].textContent = cell.n.toString();
 				(td.childNodes[0] as HTMLTableElement).classList.remove("hidden"); // shows the number
 				(td.childNodes[1] as HTMLTableElement).classList.add("hidden"); // hides the notes grid
 			}
