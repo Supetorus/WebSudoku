@@ -44,5 +44,12 @@ namespace WebSudoku.Controllers
 			GameBoard.Generate(1);
 			return GameBoard.GetInitialGrid();
 		}
+
+		[Route("GetHint")]
+		[HttpGet]
+		public Board.GridNum GetHint()
+		{
+			return GameBoard.GetHint();
+		}
 	}
 }

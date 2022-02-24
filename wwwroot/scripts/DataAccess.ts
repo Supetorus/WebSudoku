@@ -1,5 +1,11 @@
 ﻿var xhttp = new XMLHttpRequest();
 
+class GridNum {
+	x: number;
+	y: number;
+	value: number;
+}
+
 xhttp.onload = function () {
 	if (xhttp.readyState === XMLHttpRequest.DONE) {
 		var status = xhttp.status;
@@ -44,4 +50,14 @@ function GenerateBoard() {
 	xhttp.open("POST", "WebSudoku/DAController/Generate", false);
 	xhttp.send();
 	return JSON.parse(xhttp.responseText);
+}
+
+function GetHint() {
+	xhttp.open("GET", "", false);
+	xhttp.send();
+	let info = new GridNum();
+	Object.assign(info, xhttp.responseText);
+	//grid[info.x][info.y] = info.value;
+	gameTable.rows[info.y].cells[info.x].children[0].textContent = info.value.toString();
+	return info;
 }
