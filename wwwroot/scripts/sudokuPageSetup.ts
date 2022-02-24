@@ -1,16 +1,10 @@
-﻿let boardSize = 9;
-let noteGridSize = 3;
-
-// All of the sudoku 'p' elements are contained in this html table.
-let gameTable: HTMLTableElement = document.getElementById("gameTable") as HTMLTableElement;
-gameTable.id = "game-table";
-
-// Sets up the gameTable and gameBoard to be boardSize.
+﻿// Sets up the gameTable and gameBoard to be boardSize.
 for (let row = 0; row < boardSize; row++) {
 	gameTable.appendChild(document.createElement('tr'));
 	for (let col = 0; col < boardSize; col++) {
 		let td = document.createElement('td')
 		td.classList.add("sudoku-square")
+		td.classList.add("unselected");
 		td.id = col.toString() + row.toString();
 		gameTable.rows[row].appendChild(td);
 		let p = document.createElement('p');
@@ -43,5 +37,14 @@ for (let row = 0; row < boardSize; row++) {
 }
 
 function boardClicked(e: MouseEvent) {
-	console.log(`Clicked Cell ${(e.target as HTMLElement).parentElement.closest("td").id}`)
+	console.log(`Clicked Cell ${(e.target as HTMLElement).parentElement.closest("td").id}`);
+
+	if (selected) {
+		selected.classList.add("unselected");
+		selected.classList.remove("selected");
+	}
+
+	selected = (e.target as HTMLElement).parentElement.closest("td");
+	selected.classList.add("selected");
+	selected.classList.remove("unselected");
 }

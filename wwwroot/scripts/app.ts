@@ -1,22 +1,7 @@
-let grid: number[][];
-
 document.getElementById("btn-new-game").addEventListener('click', e => {
-	let grid: number[] = GetBoardGrid();
+	grid = GenerateGrid();
 	SetBoard();
-	for (let row = 0; row < boardSize; row++) {
-		for (let col = 0; col < boardSize; col++) {
-			let num = grid[row + col * boardSize];
-			let td = gameTable.rows[row].cells[col] as HTMLTableDataCellElement;
-			if (num === 0) {
-				(td.childNodes[0] as HTMLParagraphElement).classList.add("hidden");
-				(td.childNodes[1] as HTMLTableElement).classList.remove("hidden");
-			}
-			else {
-				td.childNodes[0].textContent = num === 0 ? "" : num.toString();
-				(td.childNodes[1] as HTMLTableElement).classList.add("hidden");
-			}
-		}
-	}
+	console.log("new game")
 })
 
 document.getElementById("btn-reset").addEventListener('click', e => {
@@ -47,22 +32,48 @@ document.getElementById("btn-pause").addEventListener('click', e => {
 	console.log("Clicked Pause")
 })
 
+// Attaches an event listener to each number button.
 for (let i = 1; i <= boardSize; i++) {
 	document.getElementById("n" + i).addEventListener('click', e => {
 		let clicked = e.target as HTMLParagraphElement; // This is the paragraph element which was clicked.
-		let num = parseInt(clicked.textContent); // This is the number which was clicked on.
-
-		// Todo: Insert the number at the selected location. Tell the server what
-		// number was entered where and find out whether it was correct or not.
+		let num: number = parseInt(clicked.textContent); // This is the number which was clicked on.
+		let col: number = parseInt(selected.id.slice(0, 1));
+		let row: number = parseInt(selected.id.slice(1));
+		if (!grid[col][row].isCorrect) {
+			selected.childNodes[0].textContent = num.toString();
+			(selected.childNodes[0] as HTMLElement).classList.remove("hidden");
+			(selected.childNodes[1] as HTMLElement).classList.add("hidden");
+			grid[col][row].n = num;
+			grid[col][row].isCorrect = SetNum(col, row, num)
+			if (grid[col][row].isCorrect) {
+				selected.classList.add("correct");
+				selected.classList.remove("incorrect");
+			}
+			else {
+				selected.classList.add("incorrect");
+				selected.classList.remove("correct");
+			}
+		}
 		console.log(`Clicked ${num}`)
 	})
 }
 
+// This function puts all the numbers from the grid into the visual board.
 function SetBoard() {
-	for (let row = 0; row < boardSize; row++) {
-		for (let col = 0; col < boardSize; col++) {
-			let num = grid[row][col];
-			gameTable.rows[row].cells[col].firstChild.textContent = num == 0 ? "" : num.toString();
+	for (let col = 0; col < boardSize; col++) {
+		for (let row = 0; row < boardSize; row++) {
+			let cell = grid[col][row];
+			let td = gameTable.rows[row].cells[col] as HTMLTableDataCellElement;
+			if (cell.n === 0) {
+				(td.childNodes[0] as HTMLParagraphElement).textContent = "";
+				(td.childNodes[0] as HTMLParagraphElement).classList.add("hidden"); // hides the number
+				(td.childNodes[1] as HTMLTableElement).classList.remove("hidden"); // shows the notes grid
+			}
+			else {
+				td.childNodes[0].textContent = cell.n === 0 ? "" : cell.n.toString();
+				(td.childNodes[0] as HTMLTableElement).classList.remove("hidden"); // shows the number
+				(td.childNodes[1] as HTMLTableElement).classList.add("hidden"); // hides the notes grid
+			}
 		}
 	}
 }

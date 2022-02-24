@@ -10,6 +10,7 @@ for details on configuring this project to bundle and minify static web assets. 
 	margin-left: 2rem;
 	margin-right: 2rem;
 	padding: 0rem;
+	color: #C4D6B0
 }
 
 .sudoku-box-column {
@@ -46,13 +47,36 @@ for details on configuring this project to bundle and minify static web assets. 
 }
 
 td.sudoku-square {
-	background-color: #291F1E;
 	border-radius: 1rem;
 	width: 3.442rem;
 	min-width: 3.442rem;
 	height: 3.442rem;
 	min-height: 3.442rem;
 	position: relative;
+}
+
+.unselected {
+	background-color: #291F1E;
+}
+
+.unselected:hover {
+	background-color: #2f2827;
+}
+
+.selected {
+	background-color: #324454;
+}
+
+.selected:hover {
+	background-color: #394f63;
+}
+
+.correct {
+	color: #C4D6B0;
+}
+
+.incorrect {
+	color: #d6b6b0;
 }
 
 p.sudoku-square {
@@ -89,7 +113,7 @@ p.note-square {
 }
 
 .note-table {
-/*	position: absolute;
+	/*	position: absolute;
 	z-index: 100;*/
 }
 
@@ -120,7 +144,6 @@ p.note-square {
 
 body {
 	font-size: 12px;
-	color: #C4D6B0;
 	background-color: #B79492;
 }
 
