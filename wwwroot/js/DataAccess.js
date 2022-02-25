@@ -17,11 +17,17 @@ function GetInitialGrid() {
     xhttp.send();
     return JSON.parse(xhttp.responseText);
 }
-//Returns the current grid
+//Returns the current grid 
 function GetCurrentGrid() {
+    xhttp.open("GET", "WebSudoku/DAController/GetCurrentGrid", false);
+    xhttp.send();
+    return JSON.parse(xhttp.responseText);
     //uses the GetCurrentGrid route in DAController
 }
 function GetCorrectNum(x, y) {
+    xhttp.open("GET", "WebSudoku/DAController/GetCorrectNum", false);
+    xhttp.send();
+    return JSON.parse(xhttp.responseText);
     //uses the GetCorrectNum route in DAController
 }
 //Sets client and server grid at (x, y) to value
