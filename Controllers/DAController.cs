@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebSudoku.Models;
+using System;
 
 namespace WebSudoku.Controllers
 {
@@ -43,6 +44,14 @@ namespace WebSudoku.Controllers
 		{
 			GameBoard.Generate(1);
 			return GameBoard.GetInitialGrid();
+		}
+
+		[Route("GetHint")]
+		[HttpGet]
+		public string GetHint()
+		{
+			Board.GridNum gn = GameBoard.GetHint();
+			return $"{gn.x},{gn.y},{gn.value}";
 		}
 	}
 }

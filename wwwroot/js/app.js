@@ -1,10 +1,10 @@
 document.getElementById("btn-new-game").addEventListener('click', e => {
-    grid = GenerateGrid();
+    grid = SetGrid(GenerateNumberGrid());
     SetBoard();
     console.log("new game");
 });
 document.getElementById("btn-reset").addEventListener('click', e => {
-    grid = GetInitialGrid();
+    grid = SetGrid(GetInitialGrid());
     SetBoard();
     console.log("Clicked Reset");
 });
@@ -13,8 +13,7 @@ document.getElementById("btn-note").addEventListener('click', e => {
     console.log("Clicked Note");
 });
 document.getElementById("btn-hint").addEventListener('click', e => {
-    //I think the best way to do this is to get a random unfilled position and ask the server for the correct number at that spot
-    // Todo: Request a hint from the server and fill it in.
+    GetHint();
     console.log("Clicked Hint");
 });
 document.getElementById("btn-undo").addEventListener('click', e => {
@@ -33,21 +32,7 @@ for (let i = 1; i <= boardSize; i++) {
         let num = parseInt(clicked.textContent); // This is the number which was clicked on.
         let col = parseInt(selected.id.slice(0, 1));
         let row = parseInt(selected.id.slice(1));
-        if (!grid[col][row].isCorrect) {
-            selected.childNodes[0].textContent = num.toString();
-            selected.childNodes[0].classList.remove("hidden");
-            selected.childNodes[1].classList.add("hidden");
-            grid[col][row].n = num;
-            grid[col][row].isCorrect = SetNum(col, row, num);
-            if (grid[col][row].isCorrect) {
-                selected.classList.add("correct");
-                selected.classList.remove("incorrect");
-            }
-            else {
-                selected.classList.add("incorrect");
-                selected.classList.remove("correct");
-            }
-        }
+        SetCell(col, row, num);
         console.log(`Clicked ${num}`);
     });
 }
@@ -63,7 +48,7 @@ function SetBoard() {
                 td.childNodes[1].classList.remove("hidden"); // shows the notes grid
             }
             else {
-                td.childNodes[0].textContent = cell.n === 0 ? "" : cell.n.toString();
+                td.childNodes[0].textContent = cell.n.toString();
                 td.childNodes[0].classList.remove("hidden"); // shows the number
                 td.childNodes[1].classList.add("hidden"); // hides the notes grid
             }

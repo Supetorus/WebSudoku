@@ -1,4 +1,9 @@
-﻿var xhttp = new XMLHttpRequest();
+﻿class CellInfo {
+	n: number;
+	isCorrect: boolean = false;
+}
+
+var xhttp = new XMLHttpRequest();
 
 xhttp.onload = function () {
 	if (xhttp.readyState === XMLHttpRequest.DONE) {
@@ -52,3 +57,11 @@ function GetCorrectNum(x: number, y: number) {
 		return JSON.parse(xhttp.responseText);
 	}
 
+function GetHint() {
+	xhttp.open("GET", "WebSudoku/DAController/GetHint", false);
+	xhttp.send();
+
+	let info: number[] = xhttp.responseText.split(",").map(Number);
+
+	SetCell(info[0], info[1], info[2]);
+}

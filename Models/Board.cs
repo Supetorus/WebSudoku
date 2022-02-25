@@ -1,11 +1,23 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
+using System.Collections.Generic;
 
 namespace WebSudoku.Models
 {
 	public class Board
 	{
+		public struct Vector2
+		{
+			public int x, y;
+
+			public Vector2(int x, int y)
+			{
+				this.x = x;
+				this.y = y;
+			}
+		}
+
 		public static readonly int SIZE = 9;
 
 		public int ID { get; private set; }
@@ -35,6 +47,7 @@ namespace WebSudoku.Models
 			70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80 };
 
 		private Random r = new Random();
+		private List<Vector2> unsolved = new List<Vector2>();
 
 		public Board()
 		{
@@ -58,11 +71,14 @@ namespace WebSudoku.Models
 
 		public void Load()
 		{
+			unsolved.Clear();
+
 			for(int i = 0; i < SIZE; ++i)
 			{
 				for (int j = 0; j < SIZE; ++j)
 				{
 					initial[i][j] = UnsolvedData[i + j * SIZE];
+					if(initial[i][j] == 0) { unsolved.Add(new Vector2(i, j)); }
 					current[i][j] = CurrentData[i + j * SIZE];
 
 					for (int k = 0; k < 3; ++k)
@@ -120,6 +136,18 @@ namespace WebSudoku.Models
 			} while (!SolveGrid() && !CompareGrids(solved, current));
 
 			CopyGrid(initial, current);
+
+			unsolved.Clear();
+			for(int i = 0; i < SIZE; ++i)
+			{
+				for(int j = 0; j < SIZE; ++j)
+				{
+					if(initial[i][j] == 0)
+					{
+						unsolved.Add(new Vector2(i, j));
+					}
+				}
+			}
 		}
 
 		bool FillGrid()
@@ -258,6 +286,29 @@ namespace WebSudoku.Models
 		/// <param name="y">Row, 0 based</param>
 		/// <returns></returns>
 		public int GetUnsolvedNum(int x, int y) { return initial[x][y]; }
+
+		public class GridNum
+		{
+			public int x;
+			public int y;
+			public int value;
+
+			public GridNum(int x, int y, int value)
+			{
+				this.x = x;
+				this.y = y;
+				this.value = value;
+			}
+		}
+
+		public GridNum GetHint()
+		{
+			int rn = r.Next(0, unsolved.Count());
+			Vector2 coord = unsolved[rn];
+			unsolved.RemoveAt(rn);
+
+			return new GridNum(coord.x, coord.y, solved[coord.x][coord.y]);
+		}
 
 		public bool CheckSafety(int x, int y, int i)
 		{
