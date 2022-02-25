@@ -289,9 +289,9 @@ namespace WebSudoku.Models
 
 		public class GridNum
 		{
-			int x;
-			int y;
-			int value;
+			public int x;
+			public int y;
+			public int value;
 
 			public GridNum(int x, int y, int value)
 			{

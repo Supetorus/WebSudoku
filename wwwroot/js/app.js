@@ -1,10 +1,10 @@
 document.getElementById("btn-new-game").addEventListener('click', e => {
-    grid = GenerateGrid();
+    grid = SetGrid(GenerateNumberGrid());
     SetBoard();
     console.log("new game");
 });
 document.getElementById("btn-reset").addEventListener('click', e => {
-    grid = GetInitialGrid();
+    grid = SetGrid(GetInitialGrid());
     SetBoard();
     console.log("Clicked Reset");
 });
@@ -32,21 +32,7 @@ for (let i = 1; i <= boardSize; i++) {
         let num = parseInt(clicked.textContent); // This is the number which was clicked on.
         let col = parseInt(selected.id.slice(0, 1));
         let row = parseInt(selected.id.slice(1));
-        if (!grid[col][row].isCorrect) {
-            selected.childNodes[0].textContent = num.toString();
-            selected.childNodes[0].classList.remove("hidden");
-            selected.childNodes[1].classList.add("hidden");
-            grid[col][row].n = num;
-            grid[col][row].isCorrect = SetNum(col, row, num);
-            if (grid[col][row].isCorrect) {
-                selected.classList.add("correct");
-                selected.classList.remove("incorrect");
-            }
-            else {
-                selected.classList.add("incorrect");
-                selected.classList.remove("correct");
-            }
-        }
+        SetCell(col, row, num);
         console.log(`Clicked ${num}`);
     });
 }

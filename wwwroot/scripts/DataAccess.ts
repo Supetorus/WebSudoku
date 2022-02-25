@@ -1,10 +1,9 @@
-﻿var xhttp = new XMLHttpRequest();
-
-class GridNum {
-	x: number;
-	y: number;
-	value: number;
+﻿class CellInfo {
+	n: number;
+	isCorrect: boolean = false;
 }
+
+var xhttp = new XMLHttpRequest();
 
 xhttp.onload = function () {
 	if (xhttp.readyState === XMLHttpRequest.DONE) {
@@ -52,37 +51,10 @@ function GenerateNumberGrid(): number[][] {
 }
 
 function GetHint() {
-	xhttp.open("GET", "", false);
+	xhttp.open("GET", "WebSudoku/DAController/GetHint", false);
 	xhttp.send();
-	let info = new GridNum();
-	Object.assign(info, xhttp.responseText);
 
-	grid[info.x][info.y].n = info.value;
-	let td = gameTable.rows[info.x].cells[info.y] as HTMLTableDataCellElement;
+	let info: number[] = xhttp.responseText.split(",").map(Number);
 
-	td.childNodes[0].textContent = info.value.toString();
-	(td.childNodes[0] as HTMLTableElement).classList.remove("hidden"); // shows the number
-	(td.childNodes[1] as HTMLTableElement).classList.add("hidden"); // hides the notes grid
-
-	return info;
-}
-
-// Returns a new sudoku board of CellInfo
-function GenerateGrid(): CellInfo[][] {
-	let numGrid: number[][] = GenerateNumberGrid();
-	let cells: CellInfo[][] = [];
-	for (let col = 0; col < numGrid.length; col++) {
-		cells.push([]);
-		for (let row = 0; row < numGrid[col].length; row++) {
-			cells[col].push(new CellInfo());
-			cells[col][row].n = numGrid[col][row];
-			if (cells[col][row].n != 0) cells[col][row].isCorrect = true;
-		}
-	}
-	return cells;
-}
-
-class CellInfo {
-	n: number;
-	isCorrect: boolean = false;
+	SetCell(info[0], info[1], info[2]);
 }
