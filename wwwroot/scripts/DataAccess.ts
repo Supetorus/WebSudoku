@@ -43,15 +43,13 @@ function GetCorrectNum(x: number, y: number) {
 	//Sets client and server grid at (x, y) to value
 	//Returns true if the value is correct
 	function SetNum(x: number, y: number, value: number) {
-		grid[x][y] = value;
-		gameTable.rows[y].cells[x].children[0].textContent = value.toString();
 		xhttp.open("POST", `WebSudoku/DAController/SetNum/${x}/${y}/${value}`, false); // this string uses back ticks (`) and ${} to insert values into it
 		xhttp.send();
 		return JSON.parse(xhttp.responseText);
 	}
 
 	//Generates a new board and returns it
-	function GenerateBoard() {
+function GenerateNumberGrid() {
 		xhttp.open("POST", "WebSudoku/DAController/Generate", false);
 		xhttp.send();
 		return JSON.parse(xhttp.responseText);
