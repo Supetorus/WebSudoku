@@ -59,17 +59,25 @@ td.sudoku-square {
 	background-color: #291F1E;
 }
 
-.unselected:hover {
-	background-color: #2f2827;
-}
+	.unselected:hover {
+		background-color: #2f2827;
+	}
 
 .selected {
 	background-color: #324454;
 }
 
-.selected:hover {
-	background-color: #394f63;
+	.selected:hover {
+		background-color: #394f63;
+	}
+
+.highlighted {
+	background-color: #4b4d4f;
 }
+
+	.highlighted:hover {
+		background-color: #595c5e;
+	}
 
 .correct {
 	color: #C4D6B0;
@@ -148,7 +156,7 @@ p.note-square {
 	position: absolute;
 	background-color: none;
 	z-index: 1;
-/*	Setting canvas width and height using css distorts the image... for some reason.
+	/*	Setting canvas width and height using css distorts the image... for some reason.
 	width: 40rem;
 	height: 40rem;*/
 }

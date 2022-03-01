@@ -45,14 +45,45 @@ function boardClicked(e: MouseEvent) {
 		selected.classList.remove("selected");
 	}
 
+	highlighted.forEach(td => {
+		td.classList.remove("highlighted");
+		td.classList.add("unselected");
+	})
+
 	selected = (e.target as HTMLElement).parentElement.closest("td");
+	let col: number = parseInt( selected.id.slice(0, 1));
+	let row: number = parseInt(selected.id.slice(1));
+
+	// Highlight row
+	for (let x = 0; x < boardSize; x++) {
+		highlighted.push(gameTable.rows[row].cells[x]);
+		gameTable.rows[row].cells[x].classList.remove("unselected");
+		gameTable.rows[row].cells[x].classList.add("highlighted");
+	}
+	// Highlight column
+	for (let y = 0; y < boardSize; y++) {
+		highlighted.push(gameTable.rows[y].cells[col]);
+		gameTable.rows[y].cells[col].classList.remove("unselected");
+		gameTable.rows[y].cells[col].classList.add("highlighted");
+	}
+	//Highlight box
+	for (let x = col - (col % 3); x < col - (col % 3) + 3; ++x)
+	{
+		for (let y = row - (row % 3); y < row - (row % 3) + 3; ++y)
+		{
+			highlighted.push(gameTable.rows[y].cells[x]);
+			gameTable.rows[y].cells[x].classList.remove("unselected");
+			gameTable.rows[y].cells[x].classList.add("highlighted");
+		}
+	}
 	selected.classList.add("selected");
 	selected.classList.remove("unselected");
+	selected.classList.remove("highlighted");
 }
 
 // Draw lines
 let c = document.getElementById("drawing") as HTMLCanvasElement;
-//c.width = 640;
+//c.width = 640; // This is set in the index.cshtml, but could be set here instead.
 //c.height = 640;
 let ctx = c.getContext("2d");
 ctx.strokeStyle = "#005b94"
