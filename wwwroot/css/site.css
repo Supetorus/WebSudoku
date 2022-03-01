@@ -122,8 +122,8 @@ p.note-square {
 }
 
 #sudoku-board {
-	width: 40rem;
-	height: 40rem;
+	min-width: 40rem;
+	min-height: 40rem;
 	border-radius: 2rem;
 }
 
@@ -140,6 +140,17 @@ p.note-square {
 #game-table {
 	border-collapse: separate;
 	border-spacing: 0.9rem;
+	position: absolute;
+	z-index: 100;
+}
+
+#drawing {
+	position: absolute;
+	background-color: none;
+	z-index: 1;
+/*	Setting canvas width and height using css distorts the image... for some reason.
+	width: 40rem;
+	height: 40rem;*/
 }
 
 body {

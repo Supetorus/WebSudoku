@@ -48,3 +48,25 @@ function boardClicked(e: MouseEvent) {
 	selected.classList.add("selected");
 	selected.classList.remove("unselected");
 }
+
+// Draw lines
+let c = document.getElementById("drawing") as HTMLCanvasElement;
+//c.width = 640;
+//c.height = 640;
+let ctx = c.getContext("2d");
+ctx.strokeStyle = "#005b94"
+ctx.lineCap = "round";
+ctx.lineWidth = 5;
+//ctx.scale(1, 0.5);
+ctx.beginPath();
+// Vertical
+ctx.moveTo(215, 8);
+ctx.lineTo(215, 632);
+ctx.moveTo(424, 8);
+ctx.lineTo(424, 632);
+// Horizontal
+ctx.moveTo(8,   215);
+ctx.lineTo(632, 215);
+ctx.moveTo(8,   424);
+ctx.lineTo(632, 424);
+ctx.stroke();
