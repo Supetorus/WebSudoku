@@ -10,14 +10,14 @@ for details on configuring this project to bundle and minify static web assets. 
 	margin-left: 2rem;
 	margin-right: 2rem;
 	padding: 0rem;
-	color: #C4D6B0
+	color: #C4D6B0;
 }
 
 .sudoku-box-column {
-	width: fit-content;
+	/*width: fit-content;*/
 	min-width: fit-content;
-	height: 40rem;
-	min-height: 40rem;
+	/*height: 40rem;*/
+	/*min-height: 40rem;*/
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -37,6 +37,8 @@ for details on configuring this project to bundle and minify static web assets. 
 	background-color: #291F1E;
 	border-radius: 1rem;
 	font-size: 2rem;
+	width: 5.5rem;
+	/*line-height: 2.5rem;*/
 }
 
 .number {
@@ -90,9 +92,9 @@ td.sudoku-square {
 p.sudoku-square {
 	position: relative;
 	top: 1px;
-	width: 3.442rem;
+	/*width: 3.442rem;*/
 	min-width: 3.442rem;
-	height: 3.442rem;
+	/*height: 3.442rem;*/
 	min-height: 3.442rem;
 	margin: 0;
 	padding: 0;
@@ -132,6 +134,8 @@ p.note-square {
 #sudoku-board {
 	min-width: 40rem;
 	min-height: 40rem;
+	max-width: 40rem;
+	max-height: 40rem;
 	border-radius: 2rem;
 }
 
@@ -159,6 +163,17 @@ p.note-square {
 	/*	Setting canvas width and height using css distorts the image... for some reason.
 	width: 40rem;
 	height: 40rem;*/
+}
+
+#controls {
+	overflow: hidden !important;
+	min-height: 33rem;
+	/*transition: min-height 0.5s ease-out;*/
+}
+
+#info {
+	overflow: hidden !important;
+	/*transition: min-height 0.5s ease-out;*/
 }
 
 body {

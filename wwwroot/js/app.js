@@ -59,4 +59,34 @@ function SetBoard() {
         }
     }
 }
+// This function controls showing info.
+document.getElementById("btn-info").addEventListener('click', e => {
+    let controls = document.getElementById("controls");
+    let children = controls.children;
+    for (let ch of children) {
+        ch.classList.toggle("hidden");
+    }
+    controls.style.minHeight = "0";
+    let info = document.getElementById("info");
+    children = info.children;
+    for (let ch of children) {
+        ch.classList.toggle("hidden");
+    }
+    info.style.minHeight = "33rem";
+});
+// This function controls showing controls.
+document.getElementById("btn-controls").addEventListener('click', e => {
+    let controls = document.getElementById("controls");
+    let children = controls.children;
+    for (let ch of children) {
+        ch.classList.toggle("hidden");
+    }
+    controls.style.minHeight = "33rem";
+    let info = document.getElementById("info");
+    children = info.children;
+    for (let ch of children) {
+        ch.classList.toggle("hidden");
+    }
+    info.style.minHeight = "0";
+});
 //# sourceMappingURL=app.js.map

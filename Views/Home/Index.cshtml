@@ -3,13 +3,24 @@
 }
 
 <div class="d-flex justify-content-center" id="sudoku-parent">
-	<div class="sudoku-box sudoku-box-column" id="controls">
-		<p class="button" id="btn-new-game">New<br />Game</p>
-		<p class="button" id="btn-reset">Reset</p>
-		<p class="button" id="btn-note">Note</p>
-		<p class="button" id="btn-hint">Hint</p>
-		<p class="button" id="btn-undo">Undo</p>
-		<p class="button" id="btn-pause">Pause</p>
+	<div class="d-flex justify-content-between flex-column">
+		@*Controls*@
+		<div class="sudoku-box sudoku-box-column" id="controls">
+			<p class="button hidden" id="btn-controls">☰</p>
+			<p class="button" id="btn-new-game">New<br />Game</p>
+			<p class="button" id="btn-reset">Reset</p>
+			<p class="button" id="btn-note">Note</p>
+			<p class="button" id="btn-hint">Hint</p>
+			<p class="button" id="btn-undo">Undo</p>
+			<p class="button" id="btn-pause">Pause</p>
+		</div>
+		@*Mistakes, timer, hints*@
+		<div class="sudoku-box sudoku-box-column" id="info">
+			<p class="button" id="btn-info">Info</p>
+			<p class="button hidden" id="timer">00:00</p>
+			<p class="button hidden" id="mistakes">0</p>
+			<p class="button hidden" id="Hints">Hints: 3</p>
+		</div>
 	</div>
 	<div class="sudoku-box" id="sudoku-board">
 		<canvas id="drawing" width="640" height="640"></canvas>
