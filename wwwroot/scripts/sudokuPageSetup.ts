@@ -9,6 +9,7 @@ for (let row = 0; row < boardSize; row++) {
 		gameTable.rows[row].appendChild(td);
 		let p = document.createElement('p');
 		p.classList.add("sudoku-square");
+		p.classList.add("hidden");
 		//p.id = col.toString() + row.toString();
 		td.addEventListener('click', boardClicked);
 		gameTable.rows[row].cells[col].appendChild(p);
