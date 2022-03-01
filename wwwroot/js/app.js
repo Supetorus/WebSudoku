@@ -30,10 +30,14 @@ for (let i = 1; i <= boardSize; i++) {
     document.getElementById("n" + i).addEventListener('click', e => {
         let clicked = e.target; // This is the paragraph element which was clicked.
         let num = parseInt(clicked.textContent); // This is the number which was clicked on.
-        let col = parseInt(selected.id.slice(0, 1));
-        let row = parseInt(selected.id.slice(1));
-        SetCell(col, row, num);
-        console.log(`Clicked ${num}`);
+        if (selected) {
+            let col = parseInt(selected.id.slice(0, 1));
+            let row = parseInt(selected.id.slice(1));
+            SetCell(col, row, num);
+            console.log(`Set cell ${col}-${row} to ${num}`);
+        }
+        else
+            console.log(`Clicked ${num}, No cell selected`);
     });
 }
 // This function puts all the numbers from the grid into the visual board.

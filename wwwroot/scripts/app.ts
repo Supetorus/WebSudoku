@@ -36,12 +36,14 @@ for (let i = 1; i <= boardSize; i++) {
 	document.getElementById("n" + i).addEventListener('click', e => {
 		let clicked = e.target as HTMLParagraphElement; // This is the paragraph element which was clicked.
 		let num: number = parseInt(clicked.textContent); // This is the number which was clicked on.
-		let col: number = parseInt(selected.id.slice(0, 1));
-		let row: number = parseInt(selected.id.slice(1));
+		if (selected) {
+			let col: number = parseInt(selected.id.slice(0, 1));
+			let row: number = parseInt(selected.id.slice(1));
+			SetCell(col, row, num);
+			console.log(`Set cell ${col}-${row} to ${num}`);
+		}
+		else console.log(`Clicked ${num}, No cell selected`)
 
-		SetCell(col, row, num);
-
-		console.log(`Clicked ${num}`)
 	})
 }
 

@@ -8,7 +8,7 @@ let gameTable: HTMLTableElement = document.getElementById("game-table") as HTMLT
 let grid: CellInfo[][];
 
 function SetCell(x: number, y: number, value: number) {
-	if (!grid[x][y].isCorrect) {
+	if (grid && !grid[x][y].isCorrect) {
 		let cell = gameTable.rows[y].cells[x];
 		cell.childNodes[0].textContent = value.toString();
 		(cell.childNodes[0] as HTMLElement).classList.remove("hidden");
