@@ -4,7 +4,7 @@ let selected: HTMLTableDataCellElement;
 let highlighted: HTMLTableDataCellElement[] = [];
 
 let gameStarted: boolean = false;
-let paused: boolean = false;
+let paused: boolean = true;
 
 // All of the sudoku 'p' elements are contained in this html table.
 let gameTable: HTMLTableElement = document.getElementById("game-table") as HTMLTableElement;
@@ -22,11 +22,12 @@ function SetCell(x: number, y: number, value: number, undo: boolean = false) {
 			grid[x][y].n = value;
 			grid[x][y].isCorrect = false;
 		}
-		else if (!grid[x][y].isCorrect) {
+		else if (!grid[x][y].isCorrect || undo) {
 			cell.childNodes[0].textContent = value.toString();
 			(cell.childNodes[0] as HTMLElement).classList.remove("hidden");
 			(cell.childNodes[1] as HTMLElement).classList.add("hidden");
 			grid[x][y].n = value;
+			grid[x][y].isCorrect = false;
 			if (!undo) {
 				grid[x][y].isCorrect = SetNum(x, y, value)
 			}
