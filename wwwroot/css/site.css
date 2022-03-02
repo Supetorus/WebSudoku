@@ -41,6 +41,10 @@ for details on configuring this project to bundle and minify static web assets. 
 	/*line-height: 2.5rem;*/
 }
 
+	.button:hover {
+		background-color: #2f2827;
+	}
+
 .number {
 	width: 4rem;
 	min-width: 4rem;
