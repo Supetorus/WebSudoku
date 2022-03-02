@@ -51,7 +51,7 @@ function SetNum(x: number, y: number, value: number) {
 	++moves;
 	let correct: boolean = JSON.parse(xhttp.responseText);
 	if (!correct) {
-		document.getElementById("Mistakes").innerHTML = `Mistakes: ${++mistakes}`;
+		document.getElementById("mistakes").innerHTML = `Mistakes: ${++mistakes}`;
 	}
 	return correct;
 }
@@ -71,7 +71,7 @@ function GetHint() {
 		let info: number[] = xhttp.responseText.split(",").map(Number);
 
 		SetCell(info[0], info[1], info[2]);
-		document.getElementById("Hints").innerHTML = `Hints: ${--hints}`;
+		document.getElementById("hints").innerHTML = `Hints: ${--hints}`;
 	}
 }
 

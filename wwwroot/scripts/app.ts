@@ -5,6 +5,8 @@ document.getElementById("btn-new-game").addEventListener('click', e => {
 	SetBoard();
 	console.log("new game")
 	gameStarted = true;
+	paused = false;
+	time = 0;
 })
 
 document.getElementById("btn-reset").addEventListener('click', e => {
