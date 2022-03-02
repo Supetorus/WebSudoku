@@ -24,10 +24,11 @@ namespace WebSudoku.Models
 		public float Timer { get; private set; }
 		public int Mistakes { get; private set; }
 		public int Hints { get; private set; }
-		public string UnsolvedData { get; private set; }
+		public string InitialData { get; private set; }
 		public string CurrentData { get; private set; }
 		public string NotesData { get; private set; }
 		public int Difficulty { get; private set; }
+		public GridNum[] Moves { get; private set; }
 
 		private int[][] solved = new int[SIZE][]; // Full board with all numbers
 		private int[][] initial = new int[SIZE][]; // The starting board with empty spaces
@@ -48,6 +49,7 @@ namespace WebSudoku.Models
 
 		private Random r = new Random();
 		private List<Vector2> unsolved = new List<Vector2>();
+		private Stack<GridNum> moves = new Stack<GridNum>();
 
 		public Board()
 		{
@@ -77,7 +79,7 @@ namespace WebSudoku.Models
 			{
 				for (int j = 0; j < SIZE; ++j)
 				{
-					initial[i][j] = UnsolvedData[i + j * SIZE];
+					initial[i][j] = InitialData[i + j * SIZE];
 					if(initial[i][j] == 0) { unsolved.Add(new Vector2(i, j)); }
 					current[i][j] = CurrentData[i + j * SIZE];
 
@@ -89,6 +91,11 @@ namespace WebSudoku.Models
 						}
 					}
 				}
+			}
+
+			for(int i = 0; i < Moves.Length; ++i)
+			{
+				moves.Push(Moves[i]);
 			}
 		}
 
@@ -115,14 +122,16 @@ namespace WebSudoku.Models
 				}
 			}
 
-			UnsolvedData = sbs.ToString();
+			InitialData = sbs.ToString();
 			CurrentData = sbu.ToString();
 			NotesData = sbn.ToString();
+			Moves = Moves.ToArray();
 		}
 
 		public void Generate(int difficulty)
 		{
 			Difficulty = difficulty;
+			Hints = 3;
 
 			while (!FillGrid())
 			{
@@ -303,11 +312,17 @@ namespace WebSudoku.Models
 
 		public GridNum GetHint()
 		{
+			--Hints;
 			int rn = r.Next(0, unsolved.Count());
 			Vector2 coord = unsolved[rn];
 			unsolved.RemoveAt(rn);
 
 			return new GridNum(coord.x, coord.y, solved[coord.x][coord.y]);
+		}
+
+		public GridNum GetUndo()
+		{
+			return moves.Pop();
 		}
 
 		public bool CheckSafety(int x, int y, int i)
@@ -363,8 +378,14 @@ namespace WebSudoku.Models
 			return i == solved[x][y];
 		}
 
+		public void SetNumUndo(int x, int y, int i)
+		{
+			current[x][y] = i;
+		}
+
 		public bool SetNum(int x, int y, int i)
 		{
+			moves.Push(new GridNum(x, y, current[x][y]));
 			current[x][y] = i;
 			if(i != solved[x][y])
 			{

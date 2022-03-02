@@ -53,5 +53,14 @@ namespace WebSudoku.Controllers
 			Board.GridNum gn = GameBoard.GetHint();
 			return $"{gn.x},{gn.y},{gn.value}";
 		}
+
+		[Route("GetUndo")]
+		[HttpGet]
+		public string GetUndo()
+		{
+			Board.GridNum gn = GameBoard.GetUndo();
+			GameBoard.SetNumUndo(gn.x, gn.y, gn.value);
+			return $"{gn.x},{gn.y},{gn.value}";
+		}
 	}
 }
