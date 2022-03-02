@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebSudoku.Migrations
 {
-    public partial class CreateAuthSchema : Migration
+    public partial class CreateAuthenticationSchema : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

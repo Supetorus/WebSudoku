@@ -10,8 +10,8 @@ using WebSudoku.Data;
 namespace WebSudoku.Migrations
 {
     [DbContext(typeof(AuthenticationContext))]
-    [Migration("20220215231758_CreateAuthSchema")]
-    partial class CreateAuthSchema
+    [Migration("20220302221424_CreateAuthenticationSchema")]
+    partial class CreateAuthenticationSchema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
