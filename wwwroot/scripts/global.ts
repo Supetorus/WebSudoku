@@ -3,26 +3,42 @@ let noteGridSize = 3;
 let selected: HTMLTableDataCellElement;
 let highlighted: HTMLTableDataCellElement[] = [];
 
+let gameStarted: boolean = false;
+let paused: boolean = false;
+
 // All of the sudoku 'p' elements are contained in this html table.
 let gameTable: HTMLTableElement = document.getElementById("game-table") as HTMLTableElement;
 
 let grid: CellInfo[][];
 
-function SetCell(x: number, y: number, value: number) {
-	if (grid && !grid[x][y].isCorrect) {
-		let cell = gameTable.rows[y].cells[x];
-		cell.childNodes[0].textContent = value.toString();
-		(cell.childNodes[0] as HTMLElement).classList.remove("hidden");
-		(cell.childNodes[1] as HTMLElement).classList.add("hidden");
-		grid[x][y].n = value;
-		grid[x][y].isCorrect = SetNum(x, y, value)
-		if (grid[x][y].isCorrect) {
-			cell.classList.add("correct");
-			cell.classList.remove("incorrect");
+function SetCell(x: number, y: number, value: number, undo: boolean = false) {
+	let cell = gameTable.rows[y].cells[x];
+
+	if (grid && grid[x][y].n != value) {
+		if (value == 0) {
+			cell.childNodes[0].textContent = "";
+			(cell.childNodes[0] as HTMLElement).classList.add("hidden");
+			(cell.childNodes[1] as HTMLElement).classList.remove("hidden");
+			grid[x][y].n = value;
+			grid[x][y].isCorrect = false;
 		}
-		else {
-			cell.classList.add("incorrect");
-			cell.classList.remove("correct");
+		else if (!grid[x][y].isCorrect) {
+			cell.childNodes[0].textContent = value.toString();
+			(cell.childNodes[0] as HTMLElement).classList.remove("hidden");
+			(cell.childNodes[1] as HTMLElement).classList.add("hidden");
+			grid[x][y].n = value;
+			if (!undo) {
+				grid[x][y].isCorrect = SetNum(x, y, value)
+			}
+
+			if (grid[x][y].isCorrect) {
+				cell.classList.add("correct");
+				cell.classList.remove("incorrect");
+			}
+			else {
+				cell.classList.add("incorrect");
+				cell.classList.remove("correct");
+			}
 		}
 	}
 }

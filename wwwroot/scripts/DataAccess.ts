@@ -5,6 +5,11 @@
 
 var xhttp = new XMLHttpRequest();
 
+//TODO: get this info at start
+let moves: number = 0;
+let hints: number = 3;
+let mistakes: number = 0;
+
 xhttp.onload = function () {
 	if (xhttp.readyState === XMLHttpRequest.DONE) {
 		var status = xhttp.status;
@@ -27,39 +32,57 @@ function GetInitialGrid() {
 
 //Returns the current grid 
 function GetCurrentGrid() {
-		xhttp.open("GET", "WebSudoku/DAController/GetCurrentGrid", false);
-		xhttp.send();
-		return JSON.parse(xhttp.responseText);
-		//uses the GetCurrentGrid route in DAController
-	}
-
-function GetCorrectNum(x: number, y: number) {
-	xhttp.open("GET", "WebSudoku/DAController/GetCorrectNum", false);
+	xhttp.open("GET", "WebSudoku/DAController/GetCurrentGrid", false);
 	xhttp.send();
 	return JSON.parse(xhttp.responseText);
-		//uses the GetCorrectNum route in DAController
-	}
+}
 
-	//Sets client and server grid at (x, y) to value
-	//Returns true if the value is correct
-	function SetNum(x: number, y: number, value: number) {
-		xhttp.open("POST", `WebSudoku/DAController/SetNum/${x}/${y}/${value}`, false); // this string uses back ticks (`) and ${} to insert values into it
-		xhttp.send();
-		return JSON.parse(xhttp.responseText);
-	}
+function GetCorrectNum(x: number, y: number) {
+	xhttp.open("GET", `WebSudoku/DAController/GetCorrectNum/${x}/${y}`, false);
+	xhttp.send();
+	return JSON.parse(xhttp.responseText);
+}
 
-	//Generates a new board and returns it
+//Sets client and server grid at (x, y) to value
+//Returns true if the value is correct
+function SetNum(x: number, y: number, value: number) {
+	xhttp.open("POST", `WebSudoku/DAController/SetNum/${x}/${y}/${value}`, false); // this string uses back ticks (`) and ${} to insert values into it
+	xhttp.send();
+	++moves;
+	let correct: boolean = JSON.parse(xhttp.responseText);
+	if (!correct) {
+		document.getElementById("Mistakes").innerHTML = `Mistakes: ${++mistakes}`;
+	}
+	return correct;
+}
+
+//Generates a new board and returns it
 function GenerateNumberGrid() {
-		xhttp.open("POST", "WebSudoku/DAController/Generate", false);
-		xhttp.send();
-		return JSON.parse(xhttp.responseText);
-	}
+	xhttp.open("POST", "WebSudoku/DAController/Generate", false);
+	xhttp.send();
+	return JSON.parse(xhttp.responseText);
+}
 
 function GetHint() {
-	xhttp.open("GET", "WebSudoku/DAController/GetHint", false);
-	xhttp.send();
+	if (gameStarted && hints > 0) {
+		xhttp.open("GET", "WebSudoku/DAController/GetHint", false);
+		xhttp.send();
 
-	let info: number[] = xhttp.responseText.split(",").map(Number);
+		let info: number[] = xhttp.responseText.split(",").map(Number);
 
-	SetCell(info[0], info[1], info[2]);
+		SetCell(info[0], info[1], info[2]);
+		document.getElementById("Hints").innerHTML = `Hints: ${--hints}`;
+	}
+}
+
+function Undo() {
+	if (moves > 0) {
+		xhttp.open("GET", "WebSudoku/DAController/GetUndo", false);
+		xhttp.send();
+
+		let info: number[] = xhttp.responseText.split(",").map(Number);
+
+		SetCell(info[0], info[1], info[2], true);
+		--moves;
+	}
 }
