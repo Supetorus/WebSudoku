@@ -1,7 +1,10 @@
+let time: number = 0;
+
 document.getElementById("btn-new-game").addEventListener('click', e => {
 	grid = SetGrid(GenerateNumberGrid());
 	SetBoard();
 	console.log("new game")
+	gameStarted = true;
 })
 
 document.getElementById("btn-reset").addEventListener('click', e => {
@@ -21,13 +24,13 @@ document.getElementById("btn-hint").addEventListener('click', e => {
 })
 
 document.getElementById("btn-undo").addEventListener('click', e => {
-	// Todo: Request the server do an undo and get the board at previous state
+	Undo();
 	console.log("Clicked Undo")
 })
 
 document.getElementById("btn-pause").addEventListener('click', e => {
 	// Todo: Cover the screen with a big pause sign, and pause the timer.
-	// Todo: implement a timer...
+	paused = !paused;
 	console.log("Clicked Pause")
 })
 
@@ -100,3 +103,18 @@ document.getElementById("btn-controls").addEventListener('click', e => {
 	}
 	info.style.minHeight = "0";
 })
+
+var timer = setInterval(function () {
+	if (!paused) {
+		++time;
+		var hours = Math.floor((time % 86400) / 3600);
+		var minutes = Math.floor((time % 3600) / 60);
+		var seconds = Math.floor(time % 60);
+
+		document.getElementById("timer").innerHTML = (hours > 0 ? `${hours}:` : "") + (minutes < 10 ? "0" : "") + `${minutes}:` + (seconds < 10 ? "0" : "") + seconds;
+	}
+}, 1000);
+
+var autoSave = setInterval(function () {
+	//TODO: save stuff
+}, 10000);
