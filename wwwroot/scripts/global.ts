@@ -5,6 +5,7 @@ let highlighted: HTMLTableDataCellElement[] = [];
 
 let gameStarted: boolean = false;
 let paused: boolean = true;
+let notes: boolean = false;
 
 // All of the sudoku 'p' elements are contained in this html table.
 let gameTable: HTMLTableElement = document.getElementById("game-table") as HTMLTableElement;
@@ -19,6 +20,8 @@ function SetCell(x: number, y: number, value: number, undo: boolean = false) {
 			cell.childNodes[0].textContent = "";
 			(cell.childNodes[0] as HTMLElement).classList.add("hidden");
 			(cell.childNodes[1] as HTMLElement).classList.remove("hidden");
+			cell.classList.remove("correct");
+			cell.classList.remove("incorrect");
 			grid[x][y].n = value;
 			grid[x][y].isCorrect = false;
 		}
@@ -30,6 +33,8 @@ function SetCell(x: number, y: number, value: number, undo: boolean = false) {
 			grid[x][y].isCorrect = false;
 			if (!undo) {
 				grid[x][y].isCorrect = SetNum(x, y, value)
+				//TODO: remove note in row/col/box
+
 			}
 
 			if (grid[x][y].isCorrect) {
@@ -40,6 +45,20 @@ function SetCell(x: number, y: number, value: number, undo: boolean = false) {
 				cell.classList.add("incorrect");
 				cell.classList.remove("correct");
 			}
+		}
+	}
+}
+
+function SetNote(x: number, y: number, value: number) {
+	let cell = gameTable.rows[y].cells[x];
+	let note = (gameTable.rows[y].cells[x].childNodes[1] as HTMLTableElement).rows[Math.floor((value-1) / 3)].cells[(value-1) % 3];
+
+	if (cell.childNodes[0].textContent == "") {
+		if (note.textContent != "") {
+			note.textContent = "";
+		}
+		else {
+			note.textContent = value.toString();
 		}
 	}
 }
