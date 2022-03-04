@@ -62,5 +62,12 @@ namespace WebSudoku.Controllers
 			GameBoard.SetNumUndo(gn.x, gn.y, gn.value);
 			return $"{gn.x},{gn.y},{gn.value}";
 		}
+
+		[Route("Save")]
+		[HttpPost]
+		public void Save()
+		{
+
+		}
 	}
 }

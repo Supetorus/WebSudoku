@@ -8,16 +8,7 @@ namespace WebSudoku.Models
 	{
 		[Required]
 		public int ID { get; private set; }
-		public float BestTimeEasy { get; set; }
-		public float AvgTimeEasy { get; set; }
-		public float BestTimeMedium { get; set; }
-		public float AvgTimeMedium { get; set; }
-		public float BestTimeHard { get; set; }
-		public float AvgTimeHard { get; set; }
-		public int GamesFinishedEasy { get; set; }
-		public int GamesFinishedMedium { get; set; }
-		public int GamesFinishedHard { get; set; }
-		public Settings SettingsData { get; set; }
-		public Board CurrentBoard { get; set; }
+		public int SettingsDataID { get; set; }
+		public int CurrentBoardID { get; set; }
 	}
 }
