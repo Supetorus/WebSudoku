@@ -21,14 +21,15 @@ namespace WebSudoku.Models
 		public static readonly int SIZE = 9;
 
 		public int ID { get; private set; }
-		public float Timer { get; private set; }
+		public int UserID { get; private set; }
+		public int Difficulty { get; private set; }
 		public int Mistakes { get; private set; }
 		public int Hints { get; private set; }
+		public float Timer { get; private set; }
 		public string InitialData { get; private set; }
 		public string CurrentData { get; private set; }
 		public string NotesData { get; private set; }
-		public int Difficulty { get; private set; }
-		public GridNum[] Moves { get; private set; }
+		public string Moves { get; private set; }
 
 		private int[][] solved = new int[SIZE][]; // Full board with all numbers
 		private int[][] initial = new int[SIZE][]; // The starting board with empty spaces
@@ -95,7 +96,7 @@ namespace WebSudoku.Models
 
 			for(int i = 0; i < Moves.Length; ++i)
 			{
-				moves.Push(Moves[i]);
+				moves.Push(new GridNum(Moves[i], Moves[++i], Moves[++i]));
 			}
 		}
 
@@ -104,6 +105,7 @@ namespace WebSudoku.Models
 			StringBuilder sbs = new StringBuilder();
 			StringBuilder sbu = new StringBuilder();
 			StringBuilder sbn = new StringBuilder();
+			StringBuilder sbm = new StringBuilder();
 
 			for(int i = 0; i < SIZE; ++i) 
 			{
@@ -122,10 +124,17 @@ namespace WebSudoku.Models
 				}
 			}
 
+			foreach (var m in moves)
+			{
+				sbm.Append(m.x);
+				sbm.Append(m.y);
+				sbm.Append(m.value);
+			}
+
 			InitialData = sbs.ToString();
 			CurrentData = sbu.ToString();
 			NotesData = sbn.ToString();
-			Moves = Moves.ToArray();
+			Moves = sbm.ToString();
 		}
 
 		public void Generate(int difficulty)
