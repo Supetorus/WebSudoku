@@ -1,29 +1,103 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
-/*.page-background {
-	background-color: #b4b4b4;
-}*/
+@media only screen and (min-width: 300px) {
+	:root {
+		font-size: 6px;
+		--between-box-size: 1rem;
+		--box-padding: 1rem;
+		--button-padding: 0.4rem;
+		--board-size: 40rem;
+		--sudoku-square-size: 3.44rem;
+		--note-square-size: 1.146rem;
+		--game-table-border-spacing: 0.9rem;
+	}
+}
+
+@media only screen and (min-width: 465px) {
+	:root {
+		font-size: 8px;
+	}
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (min-width: 600px) {
+	:root {
+		font-size: 10px;
+	}
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 695px) {
+	:root {
+		font-size: 12px;
+
+	}
+}
+
+/* Medium devices (landscape tablets, 815px and up) */
+@media only screen and (min-width: 815px) {
+	:root {
+		font-size: 14px;
+
+		/*--between-box-size: 0.5rem;
+		--box-padding: 0.5rem;
+		--button-padding: 0.2rem;
+		--board-size: 35rem;
+		--sudoku-square-size: 3.01rem;
+		--note-square-size: 1.002rem;
+		--game-table-border-spacing: 0.7875rem;*/
+	}
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+	:root {
+		font-size: 16px;
+		--between-box-size: 2rem;
+		/*--box-padding: 1rem;
+		--button-padding: 0.4rem;
+		--board-size: 40rem;
+		--sudoku-square-size: 3.44rem;
+		--note-square-size: 1.146rem;
+		--game-table-border-spacing: 0.9rem;*/
+	}
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+	:root {
+		font-size: 16px;
+		--between-box-size: 4rem;
+		/*--box-padding: 1rem;
+		--button-padding: 0.4rem;
+		--board-size: 40rem;
+		--sudoku-square-size: 3.44rem;
+		--note-square-size: 1.146rem;
+		--game-table-border-spacing: 0.9rem;*/
+	}
+}
+
+* {
+	box-sizing: border-box;
+}
 
 .sudoku-box {
 	background-color: #477998;
-	margin-left: 2rem;
-	margin-right: 2rem;
+	margin-left: var(--between-box-size);
+	margin-right: var(--between-box-size);
 	padding: 0rem;
 	color: #C4D6B0;
 }
 
 .sudoku-box-column {
-	/*width: fit-content;*/
 	min-width: fit-content;
-	/*height: 40rem;*/
-	/*min-height: 40rem;*/
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: space-between;
 	border-radius: 2rem;
-	padding: 1rem;
+	padding: var(--box-padding);
 }
 
 .button {
@@ -32,13 +106,12 @@ for details on configuring this project to bundle and minify static web assets. 
 	align-content: center;
 	justify-content: center;
 	margin: auto;
-	padding: 0.4rem;
+	padding: var(--button-padding);
 	text-align: center;
 	background-color: #291F1E;
 	border-radius: 1rem;
 	font-size: 2rem;
 	width: 5.5rem;
-	/*line-height: 2.5rem;*/
 }
 
 	.button:hover {
@@ -54,10 +127,10 @@ for details on configuring this project to bundle and minify static web assets. 
 
 td.sudoku-square {
 	border-radius: 1rem;
-	width: 3.442rem;
-	min-width: 3.442rem;
-	height: 3.442rem;
-	min-height: 3.442rem;
+	width: var(--sudoku-square-size);
+	min-width: var(--sudoku-square-size);
+	height: var(--sudoku-square-size);
+	min-height: var(--sudoku-square-size);
 	position: relative;
 }
 
@@ -96,10 +169,8 @@ td.sudoku-square {
 p.sudoku-square {
 	position: relative;
 	top: 1px;
-	/*width: 3.442rem;*/
-	min-width: 3.442rem;
-	/*height: 3.442rem;*/
-	min-height: 3.442rem;
+	min-width: var(--sudoku-square-size);
+	min-height: var(--sudoku-square-size);
 	margin: 0;
 	padding: 0;
 	text-align: center;
@@ -107,10 +178,10 @@ p.sudoku-square {
 }
 
 td.note-square {
-	width: 1.146rem;
-	min-width: 1.146rem;
-	height: 1.146rem;
-	min-height: 1.146rem;
+	width: var(--note-square-size);
+	min-width: var(--note-square-size);
+	height: var(--note-square-size);
+	min-height: var(--note-square-size);
 	/*background-color: #939393;*/
 }
 
@@ -136,10 +207,10 @@ p.note-square {
 }
 
 #sudoku-board {
-	min-width: 40rem;
-	min-height: 40rem;
-	max-width: 40rem;
-	max-height: 40rem;
+	min-width: var(--board-size);
+	min-height: var(--board-size);
+	max-width: var(--board-size);
+	max-height: var(--board-size);
 	border-radius: 2rem;
 }
 
@@ -155,7 +226,7 @@ p.note-square {
 
 #game-table {
 	border-collapse: separate;
-	border-spacing: 0.9rem;
+	border-spacing: var(--game-table-border-spacing);
 	position: absolute;
 	z-index: 100;
 }
@@ -164,8 +235,8 @@ p.note-square {
 	position: absolute;
 	background-color: none;
 	z-index: 1;
-	/*	Setting canvas width and height using css distorts the image... for some reason.
-	width: 40rem;
+	/*	Setting canvas width and height using css distorts the image... for some reason.*/
+/*	width: 40rem;
 	height: 40rem;*/
 }
 
@@ -181,7 +252,7 @@ p.note-square {
 }
 
 body {
-	font-size: 12px;
+	/*font-size: 12px;*/
 	background-color: #B79492;
 }
 
@@ -215,12 +286,12 @@ a {
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-	font-size: 14px;
+	/*font-size: 14px;*/
 }
 
 @media (min-width: 768px) {
 	html {
-		font-size: 16px;
+		/*font-size: 16px;*/
 	}
 }
 

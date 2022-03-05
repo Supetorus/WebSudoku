@@ -51,7 +51,7 @@ function boardClicked(e: MouseEvent) {
 	})
 
 	selected = (e.target as HTMLElement).parentElement.closest("td");
-	let col: number = parseInt( selected.id.slice(0, 1));
+	let col: number = parseInt(selected.id.slice(0, 1));
 	let row: number = parseInt(selected.id.slice(1));
 
 	// Highlight row
@@ -67,10 +67,8 @@ function boardClicked(e: MouseEvent) {
 		gameTable.rows[y].cells[col].classList.add("highlighted");
 	}
 	//Highlight box
-	for (let x = col - (col % 3); x < col - (col % 3) + 3; ++x)
-	{
-		for (let y = row - (row % 3); y < row - (row % 3) + 3; ++y)
-		{
+	for (let x = col - (col % 3); x < col - (col % 3) + 3; ++x) {
+		for (let y = row - (row % 3); y < row - (row % 3) + 3; ++y) {
 			highlighted.push(gameTable.rows[y].cells[x]);
 			gameTable.rows[y].cells[x].classList.remove("unselected");
 			gameTable.rows[y].cells[x].classList.add("highlighted");
@@ -97,8 +95,15 @@ ctx.lineTo(215, 632);
 ctx.moveTo(424, 8);
 ctx.lineTo(424, 632);
 // Horizontal
-ctx.moveTo(8,   215);
+ctx.moveTo(8, 215);
 ctx.lineTo(632, 215);
-ctx.moveTo(8,   424);
+ctx.moveTo(8, 424);
 ctx.lineTo(632, 424);
 ctx.stroke();
+
+window.addEventListener('resize', e => {
+	let fontSize = getComputedStyle(document.documentElement).fontSize;
+	let size = parseInt(fontSize.slice(0, fontSize.length - 2));
+	c.style.width = size * 40 + "px";
+	c.style.height = size * 40 + "px";
+});
