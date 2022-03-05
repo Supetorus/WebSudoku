@@ -21,6 +21,7 @@ document.getElementById("btn-reset").addEventListener('click', e => {
 
 document.getElementById("btn-note").addEventListener('click', e => {
 	notes = !notes;
+	document.getElementById("btn-note").classList.toggle("selected");
 	console.log("Clicked Note")
 })
 
