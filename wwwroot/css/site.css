@@ -5,12 +5,6 @@ for details on configuring this project to bundle and minify static web assets. 
 	:root {
 		font-size: 6px;
 		--between-box-size: 1rem;
-		--box-padding: 1rem;
-		--button-padding: 0.4rem;
-		--board-size: 40rem;
-		--sudoku-square-size: 3.44rem;
-		--note-square-size: 1.146rem;
-		--game-table-border-spacing: 0.9rem;
 	}
 }
 
@@ -31,7 +25,6 @@ for details on configuring this project to bundle and minify static web assets. 
 @media only screen and (min-width: 695px) {
 	:root {
 		font-size: 12px;
-
 	}
 }
 
@@ -39,14 +32,6 @@ for details on configuring this project to bundle and minify static web assets. 
 @media only screen and (min-width: 815px) {
 	:root {
 		font-size: 14px;
-
-		/*--between-box-size: 0.5rem;
-		--box-padding: 0.5rem;
-		--button-padding: 0.2rem;
-		--board-size: 35rem;
-		--sudoku-square-size: 3.01rem;
-		--note-square-size: 1.002rem;
-		--game-table-border-spacing: 0.7875rem;*/
 	}
 }
 
@@ -69,13 +54,16 @@ for details on configuring this project to bundle and minify static web assets. 
 	:root {
 		font-size: 16px;
 		--between-box-size: 4rem;
-		/*--box-padding: 1rem;
-		--button-padding: 0.4rem;
-		--board-size: 40rem;
-		--sudoku-square-size: 3.44rem;
-		--note-square-size: 1.146rem;
-		--game-table-border-spacing: 0.9rem;*/
 	}
+}
+
+:root {
+	--box-padding: 1rem;
+	--button-padding: 0.4rem;
+	--board-size: 40rem;
+	--sudoku-square-size: 3.7rem;
+	--note-square-size: 1.146rem;
+	--game-table-border-spacing: 0.67rem;
 }
 
 * {
@@ -128,10 +116,18 @@ for details on configuring this project to bundle and minify static web assets. 
 td.sudoku-square {
 	border-radius: 1rem;
 	width: var(--sudoku-square-size);
-	min-width: var(--sudoku-square-size);
 	height: var(--sudoku-square-size);
-	min-height: var(--sudoku-square-size);
 	position: relative;
+	border-style: none;
+}
+
+p.sudoku-square {
+	position: relative;
+	top: 1px;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	font-size: 2rem;
 }
 
 .unselected {
@@ -164,17 +160,6 @@ td.sudoku-square {
 
 .incorrect {
 	color: #d6b6b0;
-}
-
-p.sudoku-square {
-	position: relative;
-	top: 1px;
-	min-width: var(--sudoku-square-size);
-	min-height: var(--sudoku-square-size);
-	margin: 0;
-	padding: 0;
-	text-align: center;
-	font-size: 2rem;
 }
 
 td.note-square {
@@ -227,17 +212,19 @@ p.note-square {
 #game-table {
 	border-collapse: separate;
 	border-spacing: var(--game-table-border-spacing);
+	width: var(--board-size);
+	height: var(--board-size);
 	position: absolute;
 	z-index: 100;
+	border-style: none;
 }
 
 #drawing {
 	position: absolute;
 	background-color: none;
 	z-index: 1;
-	/*	Setting canvas width and height using css distorts the image... for some reason.*/
-/*	width: 40rem;
-	height: 40rem;*/
+	width: 40rem;
+	height: 40rem;
 }
 
 #controls {

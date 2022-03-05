@@ -100,10 +100,3 @@ ctx.lineTo(632, 215);
 ctx.moveTo(8, 424);
 ctx.lineTo(632, 424);
 ctx.stroke();
-
-window.addEventListener('resize', e => {
-	let fontSize = getComputedStyle(document.documentElement).fontSize;
-	let size = parseInt(fontSize.slice(0, fontSize.length - 2));
-	c.style.width = size * 40 + "px";
-	c.style.height = size * 40 + "px";
-});
