@@ -10,13 +10,17 @@ document.getElementById("btn-new-game").addEventListener('click', e => {
 })
 
 document.getElementById("btn-reset").addEventListener('click', e => {
+	hints = 3;
+	mistakes = 0;
+	moves = 0;
+	time = 0;
 	grid = SetGrid(GetInitialGrid());
 	SetBoard();
 	console.log("Clicked Reset");
 })
 
 document.getElementById("btn-note").addEventListener('click', e => {
-	// Todo: Toggle note entry mode
+	notes = !notes;
 	console.log("Clicked Note")
 })
 
@@ -44,7 +48,8 @@ for (let i = 1; i <= boardSize; i++) {
 		if (selected) {
 			let col: number = parseInt(selected.id.slice(0, 1));
 			let row: number = parseInt(selected.id.slice(1));
-			SetCell(col, row, num);
+			if (notes) { SetNote(col, row, num); }
+			else { SetCell(col, row, num); }
 			console.log(`Set cell ${col}-${row} to ${num}`);
 		}
 		else console.log(`Clicked ${num}, No cell selected`)

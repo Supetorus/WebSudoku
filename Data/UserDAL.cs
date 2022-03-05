@@ -57,10 +57,10 @@ namespace WebSudoku.Data
 			}
 		}
 
-		public Board LoadGame(int id)
+		public Board LoadGame(int userID)
 		{
-			Board board = db.Boards.Find(db.Users.Find(id));
-			board.Load();
+			Board board = db.Boards.FirstOrDefault(x => x.UserID == userID);
+			board?.Load();
 
 			return board;
 		}

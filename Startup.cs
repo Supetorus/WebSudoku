@@ -32,7 +32,7 @@ namespace WebSudoku
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddControllersWithViews();
-			services.AddDbContext<UserContext>(options => options.UseSqlServer(Configuration.GetConnectionString("UserDB")));
+			services.AddDbContext<UserContext>(options => options.UseSqlServer(Configuration.GetConnectionString("UserContextConnection")));
 			var builder = services.AddControllersWithViews();
 
 			if (Env.IsDevelopment())

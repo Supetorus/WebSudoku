@@ -86,3 +86,7 @@ function Undo() {
 		--moves;
 	}
 }
+
+function Save(time: number) {
+
+}
