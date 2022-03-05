@@ -5,6 +5,8 @@
 
 #Typescript
 *.js
+*.js.map
+wwwroot/js/*
 
 # User-specific files
 *.rsuser
