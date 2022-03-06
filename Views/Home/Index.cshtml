@@ -2,9 +2,9 @@
 	ViewData["Title"] = "Home Page";
 }
 
-<div class="d-flex justify-content-center" id="sudoku-parent">
-	<div class="d-flex justify-content-between flex-column">
-		@*Controls*@
+<div class="" id="sudoku-parent">
+	@*Controls*@
+	<div class="" id="control-info">
 		<div class="sudoku-box sudoku-box-column" id="controls">
 			<p class="button hidden" id="btn-controls">☰</p>
 			<p class="button" id="btn-new-game">New<br />Game</p>
@@ -22,10 +22,14 @@
 			<p class="button hidden" id="hints">Hints: 3</p>
 		</div>
 	</div>
+
+	@*Sudoku Box*@
 	<div class="sudoku-box" id="sudoku-board">
 		<canvas id="drawing" width="640" height="640"></canvas>
 		<table id="game-table"></table>
 	</div>
+
+	@*Number Buttons*@
 	<div class="sudoku-box sudoku-box-column" id="numbers">
 		<p class="number button" id="n1">1</p>
 		<p class="number button" id="n2">2</p>

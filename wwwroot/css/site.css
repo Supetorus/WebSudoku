@@ -1,58 +1,130 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
-@media only screen and (min-width: 300px) {
+@media only screen and (orientation: portrait) {
+	.sudoku-box-column {
+		display: flex;
+		flex-direction: row-reverse;
+		max-width: var(--board-size);
+	}
+
+	.sudoku-box {
+		margin-left: 0;
+		margin-right: 0;
+	}
+
+	#sudoku-parent {
+		flex-direction: column;
+	}
+
+	#controls {
+		overflow: hidden !important;
+		min-width: 33rem;
+		/*max-height: fit-content;*/
+		/*transition: min-width 0.5s ease-out;*/
+	}
+
+	#control-info {
+		flex-direction: row-reverse;
+		width: var(--board-size);
+	}
+
+	#numbers {
+		width: var(--board-size);
+	}
+
+	#info {
+		max-height: fit-content;
+	}
+}
+
+@media only screen and (orientation: landscape) {
+	.sudoku-box {
+		/*		margin-top: var(--between-box-size);
+		margin-bottom: var(--between-box-size);*/
+		margin-left: 0;
+		margin-right: 0;
+	}
+
+	.sudoku-box-column {
+		display: flex;
+		flex-direction: column;
+	}
+
+	#sudoku-parent {
+		/*justify-content: space-around;*/
+	}
+
+	#controls {
+		overflow: hidden !important;
+		min-height: 33rem;
+		/*transition: min-height 0.5s ease-out;*/
+	}
+
+	#control-info {
+		height: var(--board-size);
+		flex-direction: column;
+	}
+
+	#numbers {
+		height: var(--board-size);
+	}
+}
+
+@media only screen and (max-width: 355px), (max-height: 250px) {
+	:root {
+		font-size: 5px;
+		--between-box-size: 0.5rem;
+	}
+}
+
+@media only screen and (min-width: 355px) and (min-height: 250px) {
 	:root {
 		font-size: 6px;
 		--between-box-size: 1rem;
 	}
 }
 
-@media only screen and (min-width: 465px) {
+@media only screen and (min-width: 355px) and (min-height: 290px) {
+	:root {
+		font-size: 7px;
+	}
+}
+
+@media only screen and (min-width: 465px) and (min-height: 330px) {
 	:root {
 		font-size: 8px;
 	}
 }
 
-/* Extra small devices (phones, 600px and down) */
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 600px) and (min-height: 410px) {
 	:root {
 		font-size: 10px;
 	}
 }
 
-/* Small devices (portrait tablets and large phones, 600px and up) */
-@media only screen and (min-width: 695px) {
+@media only screen and (min-width: 695px) and (min-height: 490px) {
 	:root {
 		font-size: 12px;
 	}
 }
 
-/* Medium devices (landscape tablets, 815px and up) */
-@media only screen and (min-width: 815px) {
+@media only screen and (min-width: 815px) and (min-height: 570px) {
 	:root {
 		font-size: 14px;
 	}
 }
 
-/* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 992px) {
+@media only screen and (min-width: 992px) and (min-height: 650px) {
 	:root {
 		font-size: 16px;
 		--between-box-size: 2rem;
-		/*--box-padding: 1rem;
-		--button-padding: 0.4rem;
-		--board-size: 40rem;
-		--sudoku-square-size: 3.44rem;
-		--note-square-size: 1.146rem;
-		--game-table-border-spacing: 0.9rem;*/
 	}
 }
 
-/* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 1200px){
 	:root {
-		font-size: 16px;
+		/*font-size: 16px;*/
 		--between-box-size: 4rem;
 	}
 }
@@ -72,20 +144,16 @@ for details on configuring this project to bundle and minify static web assets. 
 
 .sudoku-box {
 	background-color: #477998;
-	margin-left: var(--between-box-size);
-	margin-right: var(--between-box-size);
-	padding: 0rem;
+	border-radius: 1rem;
+	/*padding: 0rem;*/
 	color: #C4D6B0;
 }
 
 .sudoku-box-column {
-	min-width: fit-content;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: space-between;
-	border-radius: 2rem;
 	padding: var(--box-padding);
+	justify-content: space-between;
+	align-items: center;
+	border-radius: 2rem;
 }
 
 .button {
@@ -93,7 +161,7 @@ for details on configuring this project to bundle and minify static web assets. 
 	display: flex;
 	align-content: center;
 	justify-content: center;
-	margin: auto;
+	/*margin: auto;*/
 	padding: var(--button-padding);
 	text-align: center;
 	background-color: #291F1E;
@@ -199,14 +267,26 @@ p.note-square {
 	border-radius: 2rem;
 }
 
-#numbers {
-}
-
 #sudoku-parent {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
 	position: absolute;
 	top: 50%;
-	transform: translateY(-50%);
+	left: 50%;
+	transform: translate(-50%, -50%);
 	width: 100%;
+	max-width: 75rem;
+	height: 100%;
+	max-height: 80rem;
+	/*	transform: translateY(-50%);
+	transform: translateX(-50%);*/
+	/*width: 100%;*/
+}
+
+#control-info {
+	display: flex;
+	justify-content: space-between;
 }
 
 #game-table {
@@ -227,12 +307,6 @@ p.note-square {
 	height: 40rem;
 }
 
-#controls {
-	overflow: hidden !important;
-	min-height: 33rem;
-	/*transition: min-height 0.5s ease-out;*/
-}
-
 #info {
 	overflow: hidden !important;
 	/*transition: min-height 0.5s ease-out;*/
@@ -245,6 +319,10 @@ body {
 
 td {
 	padding: 0;
+}
+
+p {
+	margin: 0;
 }
 
 a.navbar-brand {
