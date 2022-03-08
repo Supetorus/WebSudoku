@@ -1,5 +1,21 @@
 let time: number = 0;
 
+if (Load()) {
+	grid = SetGrid(GetInitialGrid());
+	SetBoard();
+	gameStarted = true;
+	paused = false;
+	time = 0;
+	//TODO: Set notes
+}
+else {
+	grid = SetGrid(GenerateNumberGrid());
+	SetBoard();
+	gameStarted = true;
+	paused = false;
+	time = 0;
+}
+
 document.getElementById("btn-new-game").addEventListener('click', e => {
 	grid = SetGrid(GenerateNumberGrid());
 	SetBoard();
@@ -124,5 +140,5 @@ var timer = setInterval(function () {
 }, 1000);
 
 var autoSave = setInterval(function () {
-	//TODO: save stuff
+	if (gameStarted) { Save(time); }
 }, 10000);

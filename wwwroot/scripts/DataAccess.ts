@@ -58,7 +58,8 @@ function SetNum(x: number, y: number, value: number) {
 
 //Generates a new board and returns it
 function GenerateNumberGrid() {
-	xhttp.open("POST", "WebSudoku/DAController/Generate", false);
+	//TODO: ask for difficulty
+	xhttp.open("POST", `WebSudoku/DAController/Generate/${1}`, false);
 	xhttp.send();
 	return JSON.parse(xhttp.responseText);
 }
@@ -88,5 +89,12 @@ function Undo() {
 }
 
 function Save(time: number) {
+	xhttp.open("POST", `WebSudoku/DAController/Save/${time}`, false);
+	xhttp.send();
+}
 
+function Load() {
+	xhttp.open("POST", "WebSudoku/DAController/Load", false);
+	xhttp.send();
+	return JSON.parse(xhttp.responseText);
 }

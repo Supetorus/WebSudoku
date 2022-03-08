@@ -1,14 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebSudoku.Models;
-using System;
+using WebSudoku.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebSudoku.Controllers
 {
+	[Authorize]
 	[ApiController]
 	[Route("WebSudoku/DAController")]
 	public class DAController : ControllerBase
 	{
-		public static Board GameBoard { get; private set; } = new Board();
+		private readonly UserDAL dal;
+		private readonly UserManager<IdentityUser> UserManager;
+		public static User GameUser { get; set; }
+		public static Board GameBoard { get; private set; }
+
+		public DAController(IDataAccessLayer<User> dal, UserManager<IdentityUser> UserManager)
+		{
+			this.dal = dal as UserDAL;
+			this.UserManager = UserManager;
+		}
 
 		[Route("GetCurrentGrid")]
 		[HttpGet]
@@ -38,11 +50,19 @@ namespace WebSudoku.Controllers
 			return GameBoard.SetNum(x, y, value);
 		}
 
-		[Route("Generate")]
+		[Route("Generate/{difficulty}")]
 		[HttpPost]
-		public int[][] GenerateBoard()
+		public int[][] GenerateBoard(int difficulty)
 		{
-			GameBoard.Generate(1);
+			if(GameBoard.ID != 0 && !GameBoard.IsGameWon())
+			{
+				dal.RemoveBoard(GameBoard.ID);
+			}
+			GameBoard.Generate(difficulty);
+			GameBoard.Save(0);
+			GameBoard.ID = 0;
+			GameBoard.ID = dal.AddBoard(GameBoard);
+			dal.SaveGame(GameUser, GameBoard);
 			return GameBoard.GetInitialGrid();
 		}
 
@@ -63,11 +83,31 @@ namespace WebSudoku.Controllers
 			return $"{gn.x},{gn.y},{gn.value}";
 		}
 
-		[Route("Save")]
+		[Route("Save/{time}")]
 		[HttpPost]
-		public void Save()
+		public void Save(float time)
 		{
+			GameBoard.Save(time);
+			dal.SaveGame(GameUser, GameBoard);
+		}
 
+		[Route("Load")]
+		[HttpPost]
+		public bool Load()
+		{
+			GameUser = dal.GetItem(UserManager.GetUserId(User));
+			if (GameUser.CurrentBoardID != 0)
+			{
+				GameBoard = dal.GetBoard(GameUser.CurrentBoardID);
+				GameBoard.Load();
+				return true;
+			}
+			else
+			{
+				GameBoard = new Board();
+				GameBoard.UserID = GameUser.ID;
+				return false;
+			}
 		}
 	}
 }

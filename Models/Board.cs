@@ -20,8 +20,8 @@ namespace WebSudoku.Models
 
 		public static readonly int SIZE = 9;
 
-		public int ID { get; private set; }
-		public int UserID { get; private set; }
+		public int ID { get; set; }
+		public int UserID { get; set; }
 		public int Difficulty { get; private set; }
 		public int Mistakes { get; private set; }
 		public int Hints { get; private set; }
@@ -61,7 +61,7 @@ namespace WebSudoku.Models
 				current[i] = new int[SIZE];
 				notes[i] = new int[SIZE][][];
 
-				for (int j = 0; j < 3; ++j)
+				for (int j = 0; j < SIZE; ++j)
 				{
 					notes[i][j] = new int[3][];
 					for(int k = 0; k < 3; ++k)
@@ -80,15 +80,15 @@ namespace WebSudoku.Models
 			{
 				for (int j = 0; j < SIZE; ++j)
 				{
-					initial[i][j] = InitialData[i + j * SIZE];
+					initial[i][j] = InitialData[i + j * SIZE] - '0';
 					if(initial[i][j] == 0) { unsolved.Add(new Vector2(i, j)); }
-					current[i][j] = CurrentData[i + j * SIZE];
+					current[i][j] = CurrentData[i + j * SIZE] - '0';
 
 					for (int k = 0; k < 3; ++k)
 					{
 						for (int l = 0; l < 3; ++l)
 						{
-							notes[i][j][k][l] = NotesData[i + j * SIZE + k * SIZE * SIZE + l * SIZE * SIZE * 3];
+							notes[i][j][k][l] = NotesData[i + j * SIZE + k * SIZE * 3 + l * SIZE * SIZE] - '0';
 						}
 					}
 				}
@@ -96,14 +96,16 @@ namespace WebSudoku.Models
 
 			for(int i = 0; i < Moves.Length; ++i)
 			{
-				moves.Push(new GridNum(Moves[i], Moves[++i], Moves[++i]));
+				moves.Push(new GridNum(Moves[i] - '0', Moves[++i] - '0', Moves[++i] - '0'));
 			}
+
+			//TODO: get solved board
 		}
 
-		public void Save()
+		public void Save(float time)
 		{
-			StringBuilder sbs = new StringBuilder();
-			StringBuilder sbu = new StringBuilder();
+			StringBuilder sbi = new StringBuilder();
+			StringBuilder sbc = new StringBuilder();
 			StringBuilder sbn = new StringBuilder();
 			StringBuilder sbm = new StringBuilder();
 
@@ -111,14 +113,14 @@ namespace WebSudoku.Models
 			{
 				for(int j = 0; j < SIZE; ++j)
 				{
-					sbs.Append(solved[i][j].ToString());
-					sbu.Append(initial[i][j].ToString());
+					sbi.Append(initial[i][j].ToString());
+					sbc.Append(current[i][j].ToString());
 
 					for (int k = 0; k < 3; ++k)
 					{
 						for (int l = 0; l < 3; ++l)
 						{
-							sbn.Append(initial[k][l].ToString());
+							sbn.Append(notes[i][j][k][l].ToString());
 						}
 					}
 				}
@@ -131,10 +133,11 @@ namespace WebSudoku.Models
 				sbm.Append(m.value);
 			}
 
-			InitialData = sbs.ToString();
-			CurrentData = sbu.ToString();
+			InitialData = sbi.ToString();
+			CurrentData = sbc.ToString();
 			NotesData = sbn.ToString();
 			Moves = sbm.ToString();
+			Timer = time;
 		}
 
 		public void Generate(int difficulty)
