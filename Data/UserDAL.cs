@@ -1,20 +1,39 @@
 ﻿using System.Collections.Generic;
 using WebSudoku.Data;
 using WebSudoku.Models;
+using WebSudoku.Controllers;
 using System.Linq;
 
 namespace WebSudoku.Data
 {
 	public class UserDAL : IDataAccessLayer<User>
 	{
-		public UserContext db { get; set; }
+		private UserContext db;
+
+		public UserDAL(UserContext context)
+		{
+			db = context;
+		}
 
 		public void AddItem(User item)
 		{
 			if(db.Users.Find(item.ID) == null)
 			{
 				db.Add(item);
+				db.SaveChanges();
 			}
+		}
+
+		public int AddBoard(Board item)
+		{
+			if (db.Boards.Find(item.ID) == null)
+			{
+				db.Add(item);
+				db.SaveChanges();
+				return db.Boards.FirstOrDefault(x => x.InitialData == item.InitialData).ID;
+			}
+
+			return 0;
 		}
 
 		public IEnumerable<User> FilterCollection(params string[] filters)
@@ -27,9 +46,23 @@ namespace WebSudoku.Data
 			return db.Users.ToList();
 		}
 
-		public User GetItem(int id)
+		public User GetItem(string id)
 		{
-			return db.Users.Find(id);
+			User item = db.Users.FirstOrDefault(x => x.AuthID == id);
+			if(item == null)
+			{
+				item = new User();
+				item.AuthID = id;
+				AddItem(item);
+				db.SaveChanges();
+			}
+
+			return item;
+		}
+
+		public Board GetBoard(int id)
+		{
+			return db.Boards.Find(id);
 		}
 
 		public void RemoveItem(int id)
@@ -57,6 +90,23 @@ namespace WebSudoku.Data
 			}
 		}
 
+		public int UpdateBoard(Board board)
+		{
+			var result = db.Boards.Find(board.ID);
+			if (result != null)
+			{
+				db.Entry(result).CurrentValues.SetValues(board);
+				db.SaveChanges();
+				return board.ID;
+			}
+			else
+			{
+				db.Add(board);
+				db.SaveChanges();
+				return db.Boards.FirstOrDefault(x => x.InitialData == board.InitialData).ID;
+			}
+		}
+
 		public Board LoadGame(int userID)
 		{
 			Board board = db.Boards.FirstOrDefault(x => x.UserID == userID);
@@ -65,20 +115,16 @@ namespace WebSudoku.Data
 			return board;
 		}
 
-		public void SaveGame(Board board)
+		public void SaveGame(User user, Board board)
 		{
-			board.Save();
+			user.CurrentBoardID = UpdateBoard(board);
 
-			var result = db.Boards.Find(board.ID);
-			if (result != null)
-			{
-				db.Entry(result).CurrentValues.SetValues(board);
-				db.SaveChanges();
-			}
-			else
-			{
-				db.Add(board);
-			}
+			UpdateItem(user);
+		}
+
+		public void List()
+		{
+			List<Board> list = db.Boards.ToList();
 		}
 	}
 }
