@@ -54,6 +54,10 @@ namespace WebSudoku.Controllers
 		[HttpPost]
 		public int[][] GenerateBoard(int difficulty)
 		{
+			if(GameBoard.ID != 0 && !GameBoard.IsGameWon())
+			{
+				dal.RemoveBoard(GameBoard.ID);
+			}
 			GameBoard.Generate(difficulty);
 			GameBoard.Save(0);
 			GameBoard.ID = 0;

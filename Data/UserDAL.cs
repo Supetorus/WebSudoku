@@ -75,6 +75,16 @@ namespace WebSudoku.Data
 			}
 		}
 
+		public void RemoveBoard(int id)
+		{
+			var item = db.Boards.Find(id);
+			if (item != null)
+			{
+				db.Boards.Remove(item);
+				db.SaveChanges();
+			}
+		}
+
 		public IEnumerable<User> SearchCollection(string query)
 		{
 			throw new System.NotImplementedException();
