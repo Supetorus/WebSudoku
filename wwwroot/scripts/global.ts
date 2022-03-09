@@ -34,7 +34,6 @@ function SetCell(x: number, y: number, value: number, undo: boolean = false) {
 			if (!undo) {
 				grid[x][y].isCorrect = SetNum(x, y, value)
 				//TODO: remove note in row/col/box
-
 			}
 
 			if (grid[x][y].isCorrect) {
@@ -60,6 +59,8 @@ function SetNote(x: number, y: number, value: number) {
 		else {
 			note.textContent = value.toString();
 		}
+
+		SetNoteData(x, y, value);
 	}
 }
 
@@ -70,6 +71,7 @@ function SetGrid(grid: number[][]): CellInfo[][] {
 		for (let row = 0; row < grid[col].length; row++) {
 			cells[col].push(new CellInfo());
 			cells[col][row].n = grid[col][row];
+			//TODO: check if correct
 			if (cells[col][row].n != 0) cells[col][row].isCorrect = true;
 		}
 	}

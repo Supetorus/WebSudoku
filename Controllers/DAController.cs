@@ -43,11 +43,25 @@ namespace WebSudoku.Controllers
 			return GameBoard.GetCorrectNum(x, y);
 		}
 
+		[Route("GetNotes")]
+		[HttpGet]
+		public int[][][][] GetNotes()
+		{
+			return GameBoard.GetNotes();
+		}
+
 		[Route("SetNum/{x}/{y}/{value}")]
 		[HttpPost]
-		public bool SetBoardNum(int x, int y, int value)
+		public bool SetNum(int x, int y, int value)
 		{
 			return GameBoard.SetNum(x, y, value);
+		}
+
+		[Route("SetNote/{x}/{y}/{value}")]
+		[HttpPost]
+		public void SetNote(int x, int y, int value)
+		{
+			GameBoard.SetNote(x, y, value);
 		}
 
 		[Route("Generate/{difficulty}")]
@@ -108,6 +122,34 @@ namespace WebSudoku.Controllers
 				GameBoard.UserID = GameUser.ID;
 				return false;
 			}
+		}
+
+		[Route("GetMistakes")]
+		[HttpGet]
+		public int GetMistakes()
+		{
+			return GameBoard.Mistakes;
+		}
+
+		[Route("GetHints")]
+		[HttpGet]
+		public int GetHints()
+		{
+			return GameBoard.Hints;
+		}
+
+		[Route("GetMoves")]
+		[HttpGet]
+		public int GetMoves()
+		{
+			return GameBoard.MoveCount();
+		}
+
+		[Route("GetTime")]
+		[HttpGet]
+		public int GetTime()
+		{
+			return (int)GameBoard.Timer;
 		}
 	}
 }

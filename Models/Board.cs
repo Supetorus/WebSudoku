@@ -313,6 +313,11 @@ namespace WebSudoku.Models
 			return current;
 		}
 
+		public int[][][][] GetNotes()
+		{
+			return notes;
+		}
+
 		/// <summary>
 		/// Returns the number in the current board in the given location.
 		/// </summary>
@@ -357,6 +362,11 @@ namespace WebSudoku.Models
 		public GridNum GetUndo()
 		{
 			return moves.Pop();
+		}
+
+		public int MoveCount()
+		{
+			return moves.Count();
 		}
 
 		public bool CheckSafety(int x, int y, int i)
@@ -428,6 +438,11 @@ namespace WebSudoku.Models
 			}
 
 			return true;
+		}
+
+		public void SetNote(int x, int y, int i)
+		{
+			notes[x][y][(i - 1) / 3][(i - 1) % 3] = notes[x][y][(i - 1) / 3][(i - 1) % 3] != 0 ? 0 : i;
 		}
 
 		public void ResetBoard()

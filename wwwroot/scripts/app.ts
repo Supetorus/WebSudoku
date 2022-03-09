@@ -1,12 +1,28 @@
 let time: number = 0;
 
 if (Load()) {
-	grid = SetGrid(GetInitialGrid());
+	grid = SetGrid(GetCurrentGrid());
 	SetBoard();
 	gameStarted = true;
 	paused = false;
-	time = 0;
-	//TODO: Set notes
+	time = GetTime();
+	mistakes = GetMistakes();
+	hints = GetHints();
+	moves = GetMoves();
+	let notes: number[][][][] = GetNotes();
+
+	for (let i: number = 0; i < boardSize; ++i) {
+		for (let j: number = 0; j < boardSize; ++j) {
+			let cell = (gameTable.rows[j].cells[i].childNodes[1] as HTMLTableElement);
+
+			for (let k: number = 0; k < 3; ++k) {
+				for (let l: number = 0; l < 3; ++l) {
+					let note = cell.rows[l].cells[k];
+					note.textContent = notes[i][j][k][l] != 0 ? notes[i][j][k][l].toString() : "";
+				}
+			}
+		}
+	}
 }
 else {
 	grid = SetGrid(GenerateNumberGrid());
@@ -17,12 +33,17 @@ else {
 }
 
 document.getElementById("btn-new-game").addEventListener('click', e => {
-	grid = SetGrid(GenerateNumberGrid());
-	SetBoard();
-	console.log("new game")
+	hints = 3;
+	mistakes = 0;
+	moves = 0;
+	time = 0;
 	gameStarted = true;
 	paused = false;
-	time = 0;
+	document.getElementById("mistakes").innerHTML = `Mistakes: ${0}`;
+	document.getElementById("hints").innerHTML = `Hints: ${0}`;
+	document.getElementById("timer").innerHTML = "00:00"
+	grid = SetGrid(GenerateNumberGrid());
+	SetBoard();
 })
 
 document.getElementById("btn-reset").addEventListener('click', e => {
@@ -30,9 +51,11 @@ document.getElementById("btn-reset").addEventListener('click', e => {
 	mistakes = 0;
 	moves = 0;
 	time = 0;
+	document.getElementById("mistakes").innerHTML = `Mistakes: ${0}`;
+	document.getElementById("hints").innerHTML = `Hints: ${0}`;
+	document.getElementById("timer").innerHTML = "00:00"
 	grid = SetGrid(GetInitialGrid());
 	SetBoard();
-	console.log("Clicked Reset");
 })
 
 document.getElementById("btn-note").addEventListener('click', e => {

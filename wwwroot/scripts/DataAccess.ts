@@ -37,6 +37,13 @@ function GetCurrentGrid() {
 	return JSON.parse(xhttp.responseText);
 }
 
+//Only used for loading
+function GetNotes() {
+	xhttp.open("GET", "WebSudoku/DAController/GetNotes", false);
+	xhttp.send();
+	return JSON.parse(xhttp.responseText);
+}
+
 function GetCorrectNum(x: number, y: number) {
 	xhttp.open("GET", `WebSudoku/DAController/GetCorrectNum/${x}/${y}`, false);
 	xhttp.send();
@@ -54,6 +61,11 @@ function SetNum(x: number, y: number, value: number) {
 		document.getElementById("mistakes").innerHTML = `Mistakes: ${++mistakes}`;
 	}
 	return correct;
+}
+
+function SetNoteData(x: number, y: number, value: number) {
+	xhttp.open("POST", `WebSudoku/DAController/SetNote/${x}/${y}/${value}`, false); // this string uses back ticks (`) and ${} to insert values into it
+	xhttp.send();
 }
 
 //Generates a new board and returns it
@@ -95,6 +107,30 @@ function Save(time: number) {
 
 function Load() {
 	xhttp.open("POST", "WebSudoku/DAController/Load", false);
+	xhttp.send();
+	return JSON.parse(xhttp.responseText);
+}
+
+function GetMistakes() {
+	xhttp.open("GET", "WebSudoku/DAController/GetMistakes", false);
+	xhttp.send();
+	return JSON.parse(xhttp.responseText);
+}
+
+function GetMoves() {
+	xhttp.open("GET", "WebSudoku/DAController/GetMoves", false);
+	xhttp.send();
+	return JSON.parse(xhttp.responseText);
+}
+
+function GetHints() {
+	xhttp.open("GET", "WebSudoku/DAController/GetHints", false);
+	xhttp.send();
+	return JSON.parse(xhttp.responseText);
+}
+
+function GetTime() {
+	xhttp.open("GET", "WebSudoku/DAController/GetTime", false);
 	xhttp.send();
 	return JSON.parse(xhttp.responseText);
 }
