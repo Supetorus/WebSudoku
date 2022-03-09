@@ -38,7 +38,7 @@ namespace WebSudoku.Controllers
 
 		[Route("GetCorrectNum/{x}/{y}")]
 		[HttpGet]
-		public int GetInitialBoard(int x, int y)
+		public int GetCorrectNum(int x, int y)
 		{
 			return GameBoard.GetCorrectNum(x, y);
 		}
