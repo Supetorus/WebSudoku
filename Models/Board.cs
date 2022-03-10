@@ -80,15 +80,15 @@ namespace WebSudoku.Models
 			{
 				for (int j = 0; j < SIZE; ++j)
 				{
-					initial[i][j] = InitialData[i + j * SIZE] - '0';
+					initial[i][j] = InitialData[i * SIZE + j] - '0';
 					if(initial[i][j] == 0) { unsolved.Add(new Vector2(i, j)); }
-					current[i][j] = CurrentData[i + j * SIZE] - '0';
+					current[i][j] = CurrentData[i * SIZE + j] - '0';
 
 					for (int k = 0; k < 3; ++k)
 					{
 						for (int l = 0; l < 3; ++l)
 						{
-							notes[i][j][k][l] = NotesData[i + j * SIZE + k * SIZE * 3 + l * SIZE * SIZE] - '0';
+							notes[i][j][k][l] = NotesData[i * SIZE * SIZE + j * SIZE + k * 3 + l] - '0';
 						}
 					}
 				}
@@ -99,7 +99,7 @@ namespace WebSudoku.Models
 				moves.Push(new GridNum(Moves[i] - '0', Moves[++i] - '0', Moves[++i] - '0'));
 			}
 
-			//TODO: get solved board
+			RecreateSolved();
 		}
 
 		public void Save(float time)
@@ -138,6 +138,28 @@ namespace WebSudoku.Models
 			NotesData = sbn.ToString();
 			Moves = sbm.ToString();
 			Timer = time;
+		}
+
+		public void RecreateSolved()
+		{
+			CopyGrid(initial, solved);
+
+			for (int x = 0; x < SIZE; ++x)
+			{
+				for (int y = 0; y < SIZE; ++y)
+				{
+					if (solved[x][y] == 0)
+					{
+						for (int i = 1; i < 10; ++i)
+						{
+							if (CheckSafety(x, y, i, solved))
+							{
+								solved[x][y] = i;
+							}
+						}
+					}
+				}
+			}
 		}
 
 		public void Generate(int difficulty)
@@ -291,6 +313,11 @@ namespace WebSudoku.Models
 			return current;
 		}
 
+		public int[][][][] GetNotes()
+		{
+			return notes;
+		}
+
 		/// <summary>
 		/// Returns the number in the current board in the given location.
 		/// </summary>
@@ -335,6 +362,11 @@ namespace WebSudoku.Models
 		public GridNum GetUndo()
 		{
 			return moves.Pop();
+		}
+
+		public int MoveCount()
+		{
+			return moves.Count();
 		}
 
 		public bool CheckSafety(int x, int y, int i)
@@ -406,6 +438,11 @@ namespace WebSudoku.Models
 			}
 
 			return true;
+		}
+
+		public void SetNote(int x, int y, int i)
+		{
+			notes[x][y][(i - 1) / 3][(i - 1) % 3] = notes[x][y][(i - 1) / 3][(i - 1) % 3] != 0 ? 0 : i;
 		}
 
 		public void ResetBoard()
