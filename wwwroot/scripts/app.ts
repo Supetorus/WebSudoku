@@ -1,4 +1,4 @@
-let time: number = 0;
+﻿let time: number = 0;
 
 if (Load()) {
 	grid = SetGrid(GetInitialGrid());
@@ -6,23 +6,26 @@ if (Load()) {
 	gameStarted = true;
 	paused = false;
 	time = 0;
+	CloseMenu();
 	//TODO: Set notes
 }
-else {
-	grid = SetGrid(GenerateNumberGrid());
-	SetBoard();
-	gameStarted = true;
-	paused = false;
-	time = 0;
-}
+//else {
+//	grid = SetGrid(GenerateNumberGrid());
+//	SetBoard();
+//	gameStarted = true;
+//	paused = false;
+//	time = 0;
+//}
 
 document.getElementById("btn-new-game").addEventListener('click', e => {
-	grid = SetGrid(GenerateNumberGrid());
+	let difficulty = (document.getElementById("game-difficulty") as HTMLInputElement).value;
+	grid = SetGrid(GenerateNumberGrid(parseInt(difficulty)));
 	SetBoard();
 	console.log("new game")
 	gameStarted = true;
 	paused = false;
 	time = 0;
+	CloseMenu();
 })
 
 document.getElementById("btn-reset").addEventListener('click', e => {
@@ -51,11 +54,11 @@ document.getElementById("btn-undo").addEventListener('click', e => {
 	console.log("Clicked Undo")
 })
 
-document.getElementById("btn-pause").addEventListener('click', e => {
-	// Todo: Cover the screen with a big pause sign, and pause the timer.
-	paused = !paused;
-	console.log("Clicked Pause")
-})
+//document.getElementById("btn-pause").addEventListener('click', e => {
+//	// Todo: Cover the screen with a big pause sign, and pause the timer.
+//	paused = !paused;
+//	console.log("Clicked Pause")
+//})
 
 // Attaches an event listener to each number button.
 for (let i = 1; i <= boardSize; i++) {
@@ -142,3 +145,39 @@ var timer = setInterval(function () {
 var autoSave = setInterval(function () {
 	if (gameStarted) { Save(time); }
 }, 10000);
+
+document.getElementById("btn-menu").addEventListener("click", e => {
+	let menu = document.getElementById("menu");
+	let menuWidth = getComputedStyle(menu).getPropertyValue("width");
+	if (parseInt(menuWidth.slice(0, -2)) > 0) CloseMenu()
+	else OpenMenu();
+});
+
+document.getElementById("btn-close-menu").addEventListener("click", e => {
+	CloseMenu();
+})
+
+function OpenMenu() {
+	let menu = document.getElementById("menu");
+	let size = getComputedStyle(menu).getPropertyValue("--board-size");
+
+	menu.style.width = size;
+	menu.style.height = size;
+	menu.style.padding = "2rem";
+
+	document.getElementById("btn-menu").textContent = "▶️";
+
+	paused = true;
+}
+
+function CloseMenu() {
+	let menu = document.getElementById("menu");
+
+	menu.style.width = "0";
+	menu.style.height = "0";
+	menu.style.padding = "0";
+
+	document.getElementById("btn-menu").textContent = "⏸";
+
+	paused = false;
+}

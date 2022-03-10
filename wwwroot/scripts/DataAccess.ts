@@ -57,9 +57,8 @@ function SetNum(x: number, y: number, value: number) {
 }
 
 //Generates a new board and returns it
-function GenerateNumberGrid() {
-	//TODO: ask for difficulty
-	xhttp.open("POST", `WebSudoku/DAController/Generate/${1}`, false);
+function GenerateNumberGrid(difficulty: number) {
+	xhttp.open("POST", `WebSudoku/DAController/Generate/${difficulty}`, false);
 	xhttp.send();
 	return JSON.parse(xhttp.responseText);
 }

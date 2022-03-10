@@ -8,7 +8,10 @@
 	<link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-	<header>
+	@*The contributes-to-height class is used by javascript to get all the elements which contribute
+		to the height of the page and reduce the area of the main content.
+	*@
+	<header class="contributes-to-height">
 		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
 			<div class="container">
 				<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">WebSudoku</a>
