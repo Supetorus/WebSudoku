@@ -1,0 +1,59 @@
+﻿@{
+	ViewData["Title"] = "Home Page";
+}
+
+
+<div class="d-flex justify-content-center" id="sudoku-parent">
+	<div class="d-flex justify-content-between flex-column">
+		@*Controls*@
+		<div class="sudoku-box sudoku-box-column" id="controls">
+			<p class="button hidden" id="btn-controls">☰</p>
+			<p class="button" id="btn-new-game">New<br />Game</p>
+			<p class="button" id="btn-reset">Reset</p>
+			<p class="button" id="btn-note">Note</p>
+			<p class="button" id="btn-hint">Hint</p>
+			<p class="button" id="btn-undo">Undo</p>
+			<p class="button" id="btn-pause">Pause</p>
+			<p class="button" id="btn-colortheme">Theme</p>
+		</div>
+		@*Mistakes, timer, hints*@
+		<div class="sudoku-box sudoku-box-column" id="info">
+			<p class="button" id="btn-info">Info</p>
+			<p class="button hidden" id="timer">00:00</p>
+			<p class="button hidden" id="mistakes">0</p>
+			<p class="button hidden" id="Hints">Hints: 3</p>
+		</div>
+	</div>
+	<div class="sudoku-box" id="sudoku-board">
+		<canvas id="drawing" width="640" height="640"></canvas>
+		<table id="game-table"></table>
+	</div>
+	<div class="sudoku-box sudoku-box-column" id="numbers">
+		<p class="number button" id="n1">1</p>
+		<p class="number button" id="n2">2</p>
+		<p class="number button" id="n3">3</p>
+		<p class="number button" id="n4">4</p>
+		<p class="number button" id="n5">5</p>
+		<p class="number button" id="n6">6</p>
+		<p class="number button" id="n7">7</p>
+		<p class="number button" id="n8">8</p>
+		<p class="number button" id="n9">9</p>
+	</div>
+
+
+<body id="test">  
+<script>
+    var colors = ["white", "black", "red","green","blue","yellow","#B79492"];
+    var colorIndex = 0;
+    function changeColor() {
+        var col = document.getElementById("test");
+        if( colorIndex >= colors.length ) {
+            colorIndex = 0;
+        }
+        col.style.backgroundColor = colors[colorIndex];
+        colorIndex++;
+    }
+</script>
+
+	</body>
+	</div> 
