@@ -33,7 +33,7 @@ document.getElementById("btn-pause").addEventListener('click', e => {
 	paused = !paused;
 	console.log("Clicked Pause")
 })
-
+//Color Theme
 document.getElementById("btn-colortheme").addEventListener('click', e => {
 	// Color Theme
 	changeColors();
@@ -165,9 +165,6 @@ var colorIndex = 0;
 
 
 document.getElementById("testy").addEventListener("click", () => {
-if (isBoardSolved()) {
-	alert("You win!");
-}
-
+alert("you win")
 })
 		
