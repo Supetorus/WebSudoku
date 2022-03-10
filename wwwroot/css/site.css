@@ -252,8 +252,11 @@ p.note-square {
 }
 
 .note-table {
-	/*	position: absolute;
-	z-index: 100;*/
+	text-align: center;
+	line-height: 1rem;
+	font-weight: bold;
+	width: var(--sudoku-square-size);
+	height: var(--sudoku-square-size);
 }
 
 .hidden {
@@ -281,12 +284,12 @@ p.note-square {
 }
 
 #menu {
-	width: var(--board-size);
-	height: var(--board-size);
+	width: 0;
+	height: 0;
 	border-radius: 2rem;
 	position: absolute;
 	z-index: 200;
-	padding: 2rem;
+	padding: 0;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
