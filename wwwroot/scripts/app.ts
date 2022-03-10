@@ -17,7 +17,7 @@ if (Load()) {
 
 			for (let k: number = 0; k < 3; ++k) {
 				for (let l: number = 0; l < 3; ++l) {
-					let note = cell.rows[l].cells[k];
+					let note = cell.rows[k].cells[l];
 					note.textContent = notes[i][j][k][l] != 0 ? notes[i][j][k][l].toString() : "";
 				}
 			}

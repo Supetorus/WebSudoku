@@ -5,7 +5,6 @@
 
 var xhttp = new XMLHttpRequest();
 
-//TODO: get this info at start
 let moves: number = 0;
 let hints: number = 3;
 let mistakes: number = 0;

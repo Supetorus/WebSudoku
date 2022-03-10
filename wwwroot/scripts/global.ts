@@ -71,8 +71,16 @@ function SetGrid(grid: number[][]): CellInfo[][] {
 		for (let row = 0; row < grid[col].length; row++) {
 			cells[col].push(new CellInfo());
 			cells[col][row].n = grid[col][row];
-			//TODO: check if correct
-			if (cells[col][row].n != 0) cells[col][row].isCorrect = true;
+			if (cells[col][row].n != 0 && GetCorrectNum(col, row) == cells[col][row].n) {
+				cells[col][row].isCorrect = true;
+				gameTable.rows[row].cells[col].classList.add("correct");
+				gameTable.rows[row].cells[col].classList.remove("incorrect");
+			}
+			else if (cells[col][row].n != 0) {
+				cells[col][row].isCorrect = false;
+				gameTable.rows[row].cells[col].classList.add("incorrect");
+				gameTable.rows[row].cells[col].classList.remove("correct");
+			}
 		}
 	}
 	return cells;
