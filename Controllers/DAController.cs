@@ -151,5 +151,12 @@ namespace WebSudoku.Controllers
 		{
 			return (int)GameBoard.Timer;
 		}
+
+		[Route("isBoardSolved")]
+		[HttpGet]
+		public bool isBoardSolved()
+		{
+			return GameBoard.IsGameWon();
+		}
 	}
 }

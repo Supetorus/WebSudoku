@@ -9,20 +9,6 @@ if (Load()) {
 	mistakes = GetMistakes();
 	hints = GetHints();
 	moves = GetMoves();
-	let notes: number[][][][] = GetNotes();
-
-	for (let i: number = 0; i < boardSize; ++i) {
-		for (let j: number = 0; j < boardSize; ++j) {
-			let cell = (gameTable.rows[j].cells[i].childNodes[1] as HTMLTableElement);
-
-			for (let k: number = 0; k < 3; ++k) {
-				for (let l: number = 0; l < 3; ++l) {
-					let note = cell.rows[k].cells[l];
-					note.textContent = notes[i][j][k][l] != 0 ? notes[i][j][k][l].toString() : "";
-				}
-			}
-		}
-	}
 	CloseMenu();
 }
 //else {
@@ -77,6 +63,12 @@ document.getElementById("btn-undo").addEventListener('click', e => {
 	console.log("Clicked Undo")
 })
 
+document.getElementById("btn-colortheme").addEventListener('click', e => {
+	// Color Theme
+	changeColors();
+	console.log("Clicked Theme")
+})
+
 //document.getElementById("btn-pause").addEventListener('click', e => {
 //	// Todo: Cover the screen with a big pause sign, and pause the timer.
 //	paused = !paused;
@@ -92,7 +84,12 @@ for (let i = 1; i <= boardSize; i++) {
 			let col: number = parseInt(selected.id.slice(0, 1));
 			let row: number = parseInt(selected.id.slice(1));
 			if (notes) { SetNote(col, row, num); }
-			else { SetCell(col, row, num); }
+			else {
+				SetCell(col, row, num);
+				if (isBoardSolved()) {
+					alert("You win!");
+				}
+			}
 			console.log(`Set cell ${col}-${row} to ${num}`);
 		}
 		else console.log(`Clicked ${num}, No cell selected`)
@@ -204,3 +201,12 @@ function CloseMenu() {
 
 	paused = false;
 }
+
+var colors = ["white", "black", "red", "green", "blue", "yellow"];
+var colorIndex = 0;
+var col = document.getElementById("test");
+if (colorIndex >= colors.length) {
+	colorIndex = 0;
+}
+col.style.backgroundColor = colors[colorIndex];
+colorIndex++;

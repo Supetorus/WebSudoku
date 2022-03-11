@@ -167,6 +167,20 @@ namespace WebSudoku.Models
 			Difficulty = difficulty;
 			Hints = 3;
 
+			for (int i = 0; i < SIZE; ++i)
+			{
+				for (int j = 0; j < SIZE; ++j)
+				{
+					for (int k = 0; k < 3; ++k)
+					{
+						for (int l = 0; l < 3; ++l)
+						{
+							notes[i][j][k][l] = 0;
+						}
+					}
+				}
+			}
+
 			while (!FillGrid())
 			{
 				ClearGrid(solved);

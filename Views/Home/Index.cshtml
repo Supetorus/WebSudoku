@@ -20,6 +20,7 @@
 				<p class="button hidden" id="timer">00:00</p>
 				<p class="button hidden" id="mistakes">Mistakes: 0</p>
 				<p class="button hidden" id="hints">Hints: 3</p>
+				<p class="button hidden" id="btn-colortheme">Theme</p>
 			</div>
 		</div>
 
@@ -51,5 +52,20 @@
 			<p class="number button" id="n8">8</p>
 			<p class="number button" id="n9">9</p>
 		</div>
+
+		<body id="test">
+			<script>
+				var colors = ["white", "black", "red","green","blue","yellow","#B79492"];
+				var colorIndex = 0;
+				function changeColor() {
+				    var col = document.getElementById("test");
+				    if( colorIndex >= colors.length ) {
+					colorIndex = 0;
+				    }
+				    col.style.backgroundColor = colors[colorIndex];
+				    colorIndex++;
+				}
+			</script>
+		</body>
 	</div>
 </div>

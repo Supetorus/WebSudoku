@@ -74,6 +74,13 @@ function GenerateNumberGrid(difficulty: number) {
 	return JSON.parse(xhttp.responseText);
 }
 
+//isBoard Solved
+function isBoardSolved() {
+	xhttp.open("GET", "WebSudoku/DAController/isBoardSolved", false);
+	xhttp.send();
+	return JSON.parse(xhttp.responseText);
+}
+
 function GetHint() {
 	if (gameStarted && hints > 0) {
 		xhttp.open("GET", "WebSudoku/DAController/GetHint", false);
@@ -131,4 +138,15 @@ function GetTime() {
 	xhttp.open("GET", "WebSudoku/DAController/GetTime", false);
 	xhttp.send();
 	return JSON.parse(xhttp.responseText);
+}
+
+function changeColors() {
+	xhttp.open("GET", "WebSudoku/DAController/ChangeColor", false);
+	xhttp.send();
+	var col = document.getElementById("test");
+	if (colorIndex >= colors.length) {
+		colorIndex = 0;
+	}
+	col.style.backgroundColor = colors[colorIndex];
+	colorIndex++;
 }

@@ -65,6 +65,7 @@ function SetNote(x: number, y: number, value: number) {
 }
 
 function SetGrid(grid: number[][]): CellInfo[][] {
+	let notes: number[][][][] = GetNotes();
 	let cells: CellInfo[][] = [];
 	for (let col = 0; col < grid.length; col++) {
 		cells.push([]);
@@ -81,7 +82,17 @@ function SetGrid(grid: number[][]): CellInfo[][] {
 				gameTable.rows[row].cells[col].classList.add("incorrect");
 				gameTable.rows[row].cells[col].classList.remove("correct");
 			}
+
+			let cell = (gameTable.rows[row].cells[col].childNodes[1] as HTMLTableElement);
+
+			for (let k: number = 0; k < 3; ++k) {
+				for (let l: number = 0; l < 3; ++l) {
+					let note = cell.rows[k].cells[l];
+					note.textContent = notes[col][row][k][l] != 0 ? notes[col][row][k][l].toString() : "";
+				}
+			}
 		}
 	}
+
 	return cells;
 }
